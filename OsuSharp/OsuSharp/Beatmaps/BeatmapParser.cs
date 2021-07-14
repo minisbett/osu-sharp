@@ -18,39 +18,31 @@ namespace OsuSharp.Beatmaps
   /// </summary>
   public static class BeatmapParser
   {
-    /// <summary>
-    /// Creates a new <seealso cref="Beatmap"/> object and parses the beatmap data from a stream.
-    /// </summary>
-    /// <param name="data">A stream with the content of the .osu file.</param>
-    /// <returns>The parsed beatmap.</returns>
-    public static Beatmap FromStream(Stream s)
-    {
-      byte[] buffer = new byte[s.Length];
-      s.Read(buffer, 0, buffer.Length);
-      return FromData(buffer);
-    }
 
     /// <summary>
-    /// Creates a new <seealso cref="Beatmap"/> object and parses the beatmap data from a file.
-    /// </summary>
-    /// <param name="data">The path to the .osu file.</param>
-    /// <returns>The parsed beatmap.</returns>
-    public static Beatmap FromFile(string filePath)
-    {
-      byte[] data = File.ReadAllBytes(filePath);
-      return FromData(data);
-    }
-
-    /// <summary>
-    /// Creates a new <seealso cref="Beatmap"/> object and parses the beatmap data from a byte array.
+    /// Creates a new <seealso cref="Beatmap"/> object and deserializes the beatmap data from a byte array.
     /// </summary>
     /// <param name="data">A byte array with the content of the .osu file.</param>
-    /// <returns>The parsed beatmap.</returns>
-    public static Beatmap FromData(byte[] data)
+    /// <returns>The deserialized <seealso cref="Beatmap"/> object.</returns>
+    public static Beatmap Deserialize(byte[] data) => Deserialize(Encoding.UTF8.GetString(data));
+
+    /// <summary>
+    /// Creates a new <seealso cref="Beatmap"/> object and deserializes the beatmap data from a string array.
+    /// </summary>
+    /// <param name="data">A string array with the lines of the .osu file.</param>
+    /// <returns>The deserialized <seealso cref="Beatmap"/> object.</returns>
+    public static Beatmap Deserialize(string[] data) => Deserialize(string.Join("\n", data));
+
+    /// <summary>
+    /// Creates a new <seealso cref="Beatmap"/> object and deserializes the beatmap data from a string.
+    /// </summary>
+    /// <param name="data">A string with the content of the .osu file.</param>
+    /// <returns>The deserialized <seealso cref="Beatmap"/> object.</returns>
+    public static Beatmap Deserialize(string data)
     {
       Beatmap beatmap = new Beatmap();
       // Read the lines from the byte array, split it and sort out empty lines
-      List<string> lines = Encoding.UTF8.GetString(data).Replace("\r", "").Split('\n').Where(x => x != "").ToList();
+      List<string> lines = data.Replace("\r", "").Split('\n').Where(x => x != "").ToList();
       // add a "[]" to also parse the last section
       lines.Add("[]");
       string section = "";
