@@ -18,7 +18,6 @@ namespace Test
 
       string data1 = File.ReadAllText("C:\\Users\\Niklas\\Desktop\\test.osu");
       Beatmap b = null;
-      b = BeatmapParser.Deserialize(data1);
       for (int i = 0; i < 100; i++)
       {
         stopwatch.Restart();

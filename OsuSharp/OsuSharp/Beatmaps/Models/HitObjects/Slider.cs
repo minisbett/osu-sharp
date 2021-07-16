@@ -53,7 +53,7 @@ namespace OsuSharp.Beatmaps.Models.HitObjects
     /// <summary>
     /// The points used to construct the slider.
     /// </summary>
-    public List<Point> CurvePoints { get; } = new List<Point>();
+    public List<Point> CurvePoints { get; set; } = new List<Point>();
 
     /// <summary>
     /// The visual length in osu! pixels of the slider.
@@ -68,11 +68,11 @@ namespace OsuSharp.Beatmaps.Models.HitObjects
     /// <summary>
     /// The hitsounds that play when hitting edges of the slider's curve. The first sound is the one that plays when the slider is first clicked, and the last sound is the one that plays when the slider's end is hit.
     /// </summary>
-    public List<HitSound> EdgeSounds { get; } = new List<HitSound>();
+    public List<HitSound> EdgeSounds { get; set; } = new List<HitSound>();
 
     /// <summary>
     /// The sample sets used for the <seealso cref="EdgeSounds"/>.
     /// </summary>
-    public List<(SampleSet NormalSet, SampleSet AdditonSet)> EdgeSets { get; } = new List<(SampleSet NormalSet, SampleSet AdditonSet)>();
+    public List<(SampleSet NormalSet, SampleSet AdditonSet)> EdgeSets { get; set; } = new List<(SampleSet NormalSet, SampleSet AdditonSet)>();
   }
 }

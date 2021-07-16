@@ -51,7 +51,7 @@ namespace OsuSharp.Beatmaps.Models
     /// <summary>
     /// The search terms
     /// </summary>
-    public List<string> Tags { get; internal set; } = new List<string>();
+    public List<string> Tags { get; set; } = new List<string>();
 
     /// <summary>
     /// The beatmap ID

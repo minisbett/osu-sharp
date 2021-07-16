@@ -16,7 +16,7 @@ namespace OsuSharp.Beatmaps.Models
     /// <summary>
     /// Time in milliseconds of bookmarks
     /// </summary>
-    public List<int> Bookmarks { get; } = new List<int>();
+    public List<int> Bookmarks { get; set; } = new List<int>();
 
     /// <summary>
     /// The distance snap multiplier in the editor

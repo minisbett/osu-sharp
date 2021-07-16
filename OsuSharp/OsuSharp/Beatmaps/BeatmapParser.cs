@@ -85,6 +85,13 @@ namespace OsuSharp.Beatmaps
         string key = property.Name;
         object obj = property.GetValue(section);
 
+        // check if the value is null extra because otherwise the catch would just skip the property, instead an empty "Key:" thing should be added
+        if(obj == null)
+        {
+          lines.Add($"{key}:");
+          continue;
+        }
+
         // get the type of the property
         Type type = property.PropertyType;
 
@@ -309,8 +316,8 @@ namespace OsuSharp.Beatmaps
     {
       List<Event> events = new List<Event>();
 
-      // go through all valid lines
-      foreach (string line in lines.Where(x => x.Contains(",") && x.Split(',').Length == 8))
+      // go through all valid lines (exclude wrong formatted ones or comments)
+      foreach (string line in lines.Where(x => !x.StartsWith("//") && x.Contains(",") && x.Split(',').Length >= 3 && x.Split(',').Length <= 5))
       {
         // split the line to follow the eventType,startTime,eventParams syntax
         string[] split = line.Split(",".ToCharArray(), 3);
@@ -320,15 +327,15 @@ namespace OsuSharp.Beatmaps
           // parse the value
           string type = split[0];
           int offset = int.Parse(split[1]);
-          string eventparams = split[2];
+          string[] eventparams = split[2].Split(',');
 
           // interpret the type and create the according event object
           if (type == "Background" || type == "0")
-            events.Add(new BackgroundEvent(eventparams.Split(',')[0], int.Parse(eventparams.Split(',')[1]), int.Parse(eventparams.Split(',')[2])));
+            events.Add(new BackgroundEvent(eventparams[0].Trim('"'), int.Parse(eventparams[1]), int.Parse(eventparams[2])));
           else if (type == "Video" || type == "1")
-            events.Add(new VideoEvent(eventparams.Split(',')[0], int.Parse(eventparams.Split(',')[1]), int.Parse(eventparams.Split(',')[2]), offset));
+            events.Add(new VideoEvent(eventparams[0], int.Parse(eventparams[1]), int.Parse(eventparams[2]), offset));
           else if (type == "Break" || type == "2")
-            events.Add(new BreakEvent(offset, int.Parse(eventparams)));
+            events.Add(new BreakEvent(offset, int.Parse(eventparams[0])));
         }
         catch { continue; }
       }
