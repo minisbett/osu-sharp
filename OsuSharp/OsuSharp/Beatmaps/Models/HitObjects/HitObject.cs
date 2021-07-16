@@ -14,9 +14,9 @@ namespace OsuSharp.Beatmaps.Models
   public class HitObject
   {
     /// <summary>
-    /// Creates a new <seealso cref="HitObject"/> instance with the specified hitobject type, offset, position, newcombo status, amount of combo colours to skip and hitsounds.
+    /// Creates a new <seealso cref="HitObject"/> instance with the specified offset, position, newcombo status, amount of combo colours to skip and hitsounds.
     /// </summary>
-    /// <param name="type">The type of the hitobject (Cirlce, Slider, Spinner, osu!mania Hold).</param>
+    /// <param name="offset">The type of the hitobject.</param>
     /// <param name="offset">Offset of the hitobject, in milliseconds from the beginning of the beatmap's audio.</param>
     /// <param name="position">The position in osu! pixels of the object.</param>
     /// <param name="newcombo">Specifies whether the hitobject starts a new combo.</param>
@@ -27,7 +27,7 @@ namespace OsuSharp.Beatmaps.Models
     /// <param name="sampleindex">The sample index of the sample being played on this hitobject.</param>
     /// <param name="volume">The volume of this hitobject's hitsound.</param>
     /// <param name="filename">Custom filename of the addition sound, overrides <seealso cref="HitSound"/>, <seealso cref="NormalSet"/>, <seealso cref="AdditionSet"/> and <seealso cref="SampleIndex"/>. </param>
-    public HitObject(HitObjectType type, int offset, Point position, bool newcombo = false, int combocolorskips = 0, HitSound hitsound = HitSound.Normal, SampleSet normalset = SampleSet.Normal, SampleSet additionset = SampleSet.Normal, int sampleindex = 0, int volume = 100, string filename = "")
+    internal HitObject(HitObjectType type, int offset, Point position, bool newcombo = false, int combocolorskips = 0, HitSound hitsound = HitSound.Normal, SampleSet normalset = SampleSet.Normal, SampleSet additionset = SampleSet.Normal, int sampleindex = 0, int volume = 100, string filename = "")
     {
       Type = type;
       Offset = offset;
@@ -45,7 +45,7 @@ namespace OsuSharp.Beatmaps.Models
     /// <summary>
     /// The type of the hitobject (Cirlce, Slider, Spinner, osu!mania Hold).
     /// </summary>
-    public HitObjectType Type { get; set; }
+    public HitObjectType Type { get; }
 
     /// <summary>
     /// Offset of the hitobject, in milliseconds from the beginning of the beatmap's audio.

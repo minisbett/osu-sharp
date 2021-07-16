@@ -17,13 +17,15 @@ namespace OsuSharp.Beatmaps.Models
     /// </summary>
     /// <param name="offset">The offset from the audio start.</param>
     /// <param name="beat">The duration of a beat in milliseconds.</param>
+    /// <param name="meter">The amount of beats in a measure.</param>
     /// <param name="sampleset">The set of samples that are being played from that timing point on (Normal, Soft, Drum).</param>
     /// <param name="sampleindex">The sample index of the samples being played from that timing point on.</param>
     /// <param name="volume">The new volume at the timing point.</param>
     /// <param name="effects">The effects applied at the timing point.</param>
-    public BPMTimingPoint(int offset, float beat, SampleSet sampleset = SampleSet.Normal, int sampleindex = 0, int volume = 100, TimingPointEffect effects = TimingPointEffect.None) : base(TimingPointType.BPMChange, offset, sampleset, sampleindex, volume, effects)
+    public BPMTimingPoint(int offset, float beat, int meter, SampleSet sampleset = SampleSet.Normal, int sampleindex = 0, int volume = 100, TimingPointEffect effects = TimingPointEffect.None) : base(TimingPointType.BPMChange, offset, sampleset, sampleindex, volume, effects)
     {
       BeatLength = beat;
+      Meter = meter;
     }
 
     /// <summary>
@@ -31,17 +33,19 @@ namespace OsuSharp.Beatmaps.Models
     /// </summary>
     /// <param name="offset">The offset from the audio start.</param>
     /// <param name="beat">The duration of a beat in milliseconds OR the beats per minute, if isBPM is set to true.</param>
+    /// <param name="meter">The amount of beats in a measure.</param>
     /// <param name="isBPM">Specifies whether the beat parameter is measured in milliseconds per beat or beats per minute.</param>
     /// <param name="sampleset">The set of samples that are being played from that timing point on (Normal, Soft, Drum).</param>
     /// <param name="sampleindex">The sample index of the samples being played from that timing point on.</param>
     /// <param name="volume">The new volume at the timing point.</param>
     /// <param name="effects">The effects applied at the timing point.</param>
-    public BPMTimingPoint(int offset, float beat, bool isBPM, SampleSet sampleset = SampleSet.Normal, int sampleindex = 0, int volume = 100, TimingPointEffect effects = TimingPointEffect.None) : base(TimingPointType.BPMChange, offset, sampleset, sampleindex, volume, effects)
+    public BPMTimingPoint(int offset, float beat, int meter, bool isBPM, SampleSet sampleset = SampleSet.Normal, int sampleindex = 0, int volume = 100, TimingPointEffect effects = TimingPointEffect.None) : base(TimingPointType.BPMChange, offset, sampleset, sampleindex, volume, effects)
     {
       if (isBPM)
         BPM = beat;
       else
         BeatLength = beat;
+      Meter = meter;
     }
 
     /// <summary>
@@ -53,5 +57,10 @@ namespace OsuSharp.Beatmaps.Models
     /// The beats per minute.
     /// </summary>
     public float BPM { get => 60000 / BeatLength; set => BeatLength = 60000 / BPM; }
+
+    /// <summary>
+    /// The amount of beats in a measure.
+    /// </summary>
+    public int Meter { get; set; }
   }
 }

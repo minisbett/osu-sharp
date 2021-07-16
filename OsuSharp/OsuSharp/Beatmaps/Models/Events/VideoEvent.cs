@@ -1,6 +1,7 @@
 ﻿using OsuSharp.Beatmaps.Enums;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,20 +14,11 @@ namespace OsuSharp.Beatmaps.Models
   public class VideoEvent : Event
   {
     /// <summary>
-    /// Creates a new <seealso cref="VideoEvent"/> instance with the specified filename.
+    /// Creates a new <seealso cref="VideoEvent"/> instance with the specified filename and offset.
     /// </summary>
     /// <param name="filename">The filename of the video file.</param>
-    public VideoEvent(string filename) : base(EventType.Video)
-    {
-      Filename = filename;
-    }
-
-    /// <summary>
-    /// Creates a new <seealso cref="VideoEvent"/> instance with the specified offset and filename.
-    /// </summary>
     /// <param name="offset">The offset from the audio start.</param>
-    /// <param name="filename">The filename of the video file.</param>
-    public VideoEvent(int offset, string filename) : base(EventType.Video, offset)
+    public VideoEvent(string filename, int offset = 0) : base(EventType.Video, offset)
     {
       Filename = filename;
     }
@@ -37,25 +29,11 @@ namespace OsuSharp.Beatmaps.Models
     /// <param name="filename">The filename of the video file.</param>
     /// <param name="xOffset">The X offset of the background from the gamefield center.</param>
     /// <param name="yOffset">The Y offset of the background from the gamefield center.</param>
-    public VideoEvent(string filename, int xOffset, int yOffset) : base(EventType.Video)
-    {
-      Filename = filename;
-      XOffset = xOffset;
-      YOffset = yOffset;
-    }
-
-    /// <summary>
-    /// Creates a new <seealso cref="VideoEvent"/> instance with the specified offset and filename.
-    /// </summary>
     /// <param name="offset">The offset from the audio start.</param>
-    /// <param name="filename">The filename of the video file.</param>
-    /// <param name="xOffset">The X offset of the background from the gamefield center.</param>
-    /// <param name="yOffset">The Y offset of the background from the gamefield center.</param>
-    public VideoEvent(int offset, string filename, int xOffset, int yOffset) : base(EventType.Video, offset)
+    public VideoEvent(string filename, int xOffset, int yOffset, int offset = 0) : base(EventType.Video, offset)
     {
       Filename = filename;
-      XOffset = xOffset;
-      YOffset = yOffset;
+      PositionOffset = new Point(xOffset, yOffset);
     }
 
     /// <summary>
@@ -64,13 +42,8 @@ namespace OsuSharp.Beatmaps.Models
     public string Filename { get; set; }
 
     /// <summary>
-    /// X-Offset in osu! pixels from the center of the screen.
+    /// Offset in osu! pixels from the center of the screen.
     /// </summary>
-    public int XOffset { get; set; } = 0;
-
-    /// <summary>
-    /// Y-Offset in osu! pixels from the center of the screen.
-    /// </summary>
-    public int YOffset { get; set; } = 0;
+    public Point PositionOffset { get; set; } = new Point(0, 0);
   }
 }

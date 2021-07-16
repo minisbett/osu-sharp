@@ -16,13 +16,13 @@ namespace OsuSharp.Beatmaps.Models
     /// <summary>
     /// Creates a new <seealso cref="TimingPoint"/> instance with the specified timing point type and offset.
     /// </summary>
-    /// <param name="type">The timing point type.</param>
+    /// <param name="type">The type of the timing point.</param>
     /// <param name="offset">The offset from the audio start.</param>
     /// <param name="sampleset">The set of samples that are being played from that timing point on (Normal, Soft, Drum).</param>
     /// <param name="sampleindex">The sample index of the samples being played from that timing point on.</param>
     /// <param name="volume">The new volume at the timing point.</param>
     /// <param name="effects">The effects applied at the timing point.</param>
-    public TimingPoint(TimingPointType type, int offset, SampleSet sampleset = SampleSet.Normal, int sampleindex = 0, int volume = 100, TimingPointEffect effects = TimingPointEffect.None)
+    internal TimingPoint(TimingPointType type, int offset, SampleSet sampleset = SampleSet.Normal, int sampleindex = 0, int volume = 100, TimingPointEffect effects = TimingPointEffect.None)
     {
       Type = type;
       Offset = offset;
@@ -35,7 +35,7 @@ namespace OsuSharp.Beatmaps.Models
     /// <summary>
     /// The type of the timing point (inherited or uninherited).
     /// </summary>
-    public TimingPointType Type { get; set; }
+    public TimingPointType Type { get; }
 
     /// <summary>
     /// Offset of the event, in milliseconds from the beginning of the beatmap's audio.

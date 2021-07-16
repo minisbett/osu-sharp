@@ -13,34 +13,25 @@ namespace OsuSharp.Beatmaps.Models
   public class Event
   {
     /// <summary>
-    /// Creates a new <seealso cref="Event"/> instance with the specified event type.
+    /// Creates a new <seealso cref="Event"/> instance with the specified offset.
     /// </summary>
-    /// <param name="type">The event type.</param>
-    public Event(EventType type)
-    {
-      Offset = Offset;
-    }
-
-    /// <summary>
-    /// Creates a new <seealso cref="Event"/> instance with the specified event type and offset.
-    /// </summary>
-    /// <param name="type">The event type.</param>
+    /// <param name="type">The type of the event.</param>
     /// <param name="offset">The offset from the audio start.</param>
-    public Event(EventType type, int offset)
+    internal Event(EventType type, int offset)
     {
       Type = type;
       Offset = offset;
     }
 
     /// <summary>
-    /// Type of the event.
+    /// The type of the event.
     /// </summary>
-    public EventType Type { get; set; }
+    public EventType Type { get; }
 
     /// <summary>
-    /// Offset of the event, in milliseconds from the beginning of the beatmap's audio. For events that do not use a start time, the default is 0.
+    /// The offset of the event, in milliseconds from the beginning of the beatmap's audio. For events that do not use a start time, the default is 0.
     /// </summary>
-    public int Offset { get; set; } = 0;
+    public int Offset { get; set; }
 
     /// <summary>
     /// Returns whether the event is a background event or not.

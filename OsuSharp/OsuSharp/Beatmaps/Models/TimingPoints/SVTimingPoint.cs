@@ -16,7 +16,7 @@ namespace OsuSharp.Beatmaps.Models
     /// Creates a new <seealso cref="SVTimingPoint"/> instance with the specified offset and slider velocity percentage.
     /// </summary>
     /// <param name="offset">The offset from the audio start.</param>
-    /// <param name="beat">The duration of a beat in milliseconds.</param>
+    /// <param name="percentage">A negative inverse slider velocity multiplier, as a percentage.</param>
     /// <param name="sampleset">The set of samples that are being played from that timing point on (Normal, Soft, Drum).</param>
     /// <param name="sampleindex">The sample index of the samples being played from that timing point on.</param>
     /// <param name="volume">The new volume at the timing point.</param>

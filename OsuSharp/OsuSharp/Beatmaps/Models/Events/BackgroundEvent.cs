@@ -1,6 +1,7 @@
 ﻿using OsuSharp.Beatmaps.Enums;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,17 +17,7 @@ namespace OsuSharp.Beatmaps.Models
     /// Creates a new <seealso cref="BackgroundEvent"/> instance with the specified filename.
     /// </summary>
     /// <param name="filename">The filename of the background file.</param>
-    public BackgroundEvent(string filename) : base(EventType.Background)
-    {
-      Filename = filename;
-    }
-
-    /// <summary>
-    /// Creates a new <seealso cref="BackgroundEvent"/> instance with the specified offset and filename.
-    /// </summary>
-    /// <param name="offset">The offset from the audio start.</param>
-    /// <param name="filename">The filename of the background file.</param>
-    public BackgroundEvent(int offset, string filename) : base(EventType.Background, offset)
+    public BackgroundEvent(string filename) : base(EventType.Background, 0)
     {
       Filename = filename;
     }
@@ -37,26 +28,17 @@ namespace OsuSharp.Beatmaps.Models
     /// <param name="filename">The filename of the background file.</param>
     /// <param name="xOffset">The X offset of the background from the gamefield center.</param>
     /// <param name="yOffset">The Y offset of the background from the gamefield center.</param>
-    public BackgroundEvent(string filename, int xOffset, int yOffset) : base(EventType.Background)
+    public BackgroundEvent(string filename, int xOffset, int yOffset) : base(EventType.Background, 0)
     {
       Filename = filename;
-      XOffset = xOffset;
-      YOffset = yOffset;
+      PositionOffset = new Point(xOffset, yOffset);
     }
 
     /// <summary>
-    /// Creates a new <seealso cref="BackgroundEvent"/> instance with the specified offset and filename.
+    /// The offset of the event, in milliseconds from the beginning of the beatmap's audio. For events that do not use a start time, the default is 0.
+    /// Cannot be modified on a <seealso cref="BackgroundEvent"/> as the offset is always 0.
     /// </summary>
-    /// <param name="offset">The offset from the audio start.</param>
-    /// <param name="filename">The filename of the background file.</param>
-    /// <param name="xOffset">The X offset of the background from the gamefield center.</param>
-    /// <param name="yOffset">The Y offset of the background from the gamefield center.</param>
-    public BackgroundEvent(int offset, string filename, int xOffset, int yOffset) : base(EventType.Background, offset)
-    {
-      Filename = filename;
-      XOffset = xOffset;
-      YOffset = yOffset;
-    }
+    public new int Offset { get; } = 0;
 
     /// <summary>
     /// Location of the background image relative to the beatmap directory. Double quotes are usually included surrounding the filename, but they are not required.
@@ -64,13 +46,8 @@ namespace OsuSharp.Beatmaps.Models
     public string Filename { get; set; }
 
     /// <summary>
-    /// X-Offset in osu! pixels from the center of the screen.
+    /// Offset in osu! pixels from the center of the screen.
     /// </summary>
-    public int XOffset { get; set; } = 0;
-
-    /// <summary>
-    /// Y-Offset in osu! pixels from the center of the screen.
-    /// </summary>
-    public int YOffset { get; set; } = 0;
+    public Point PositionOffset { get; set; } = new Point(0, 0);
   }
 }
