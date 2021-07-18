@@ -1,5 +1,7 @@
 ﻿using OsuSharp.Beatmaps;
 using OsuSharp.Beatmaps.Models;
+using OsuSharp.BeatmapSets;
+using OsuSharp.BeatmapSets.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,6 +17,13 @@ namespace Test
     {
       Stopwatch stopwatch = new Stopwatch();
       List<long> benchmarks = new List<long>();
+
+
+
+      byte[] data = File.ReadAllBytes("C:\\Users\\Niklas\\Desktop\\test.osz");
+      BeatmapSet set = BeatmapSetParser.Deserialize(data);
+      Beatmap beatmap = BeatmapParser.Deserialize(set.GetFile("test.osu").Data);
+
 
       string data1 = File.ReadAllText("C:\\Users\\Niklas\\Desktop\\test.osu");
       Beatmap b = null;
