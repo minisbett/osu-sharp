@@ -25,9 +25,9 @@ namespace OsuSharp.Helpers
       m_list.Add(item, null);
     }
 
-    private B this[T item] => GetLazy(item);
+    public B this[T item] => GetLazy(item);
 
-    private B GetLazy(T item)
+    public B GetLazy(T item)
     {
       if (!m_list.ContainsKey(item))
         throw new InvalidOperationException("The requested item could not be found.");
