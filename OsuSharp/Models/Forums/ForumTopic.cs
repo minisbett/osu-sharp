@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using OsuSharp.Converters;
+using OsuSharp.Enums;
 
 namespace OsuSharp.Models.Forums;
 
@@ -60,7 +62,7 @@ public class ForumTopic
 
   // NOTE: This property is populated manually, as the posts are separated in the response and not contained in the forum topic object.
   /// <summary>
-  /// The forum posts in this forum topic.
+  /// The forum posts in the forum topic.
   /// </summary>
   public ForumPost[] Posts { get; init; } = default!;
 
@@ -69,6 +71,13 @@ public class ForumTopic
   /// </summary>
   [JsonProperty("title")]
   public string Title { get; private set; } = default!;
+
+  /// <summary>
+  /// The type of the forum topic.
+  /// </summary>
+  [JsonProperty("type")]
+  [JsonConverter(typeof(StringEnumConverter))]
+  public ForumTopicType Type { get; private set; }
 
   /// <summary>
   /// The datetime at which the forum topic was last updated.
