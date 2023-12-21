@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuSharp.Models.Discussions;
 
@@ -15,21 +10,21 @@ namespace OsuSharp.Models.Discussions;
 /// </summary>
 public class DiscussionVotes
 {
-    /// <summary>
-    /// The amount of downvotes this discussion has.
-    /// </summary>
-    [JsonProperty("down")]
-    public int Down { get; private set; }
+  /// <summary>
+  /// The amount of downvotes this discussion has.
+  /// </summary>
+  [JsonProperty("down")]
+  public int Down { get; private set; }
 
-    /// <summary>
-    /// The amount of upvotes this discussion has.
-    /// </summary>
-    [JsonProperty("up")]
-    public int Up { get; private set; }
+  /// <summary>
+  /// The amount of upvotes this discussion has.
+  /// </summary>
+  [JsonProperty("up")]
+  public int Up { get; private set; }
 
-    /// <summary>
-    /// The voters of this discussion.
-    /// </summary>
-    [JsonProperty("voters")]
-    public DiscussionVoters Voters { get; private set; } = default!;
+  /// <summary>
+  /// The voters of this discussion.
+  /// </summary>
+  [JsonProperty("voters")]
+  public DiscussionVoters Voters { get; private set; } = default!;
 }

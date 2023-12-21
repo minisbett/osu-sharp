@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuSharp.Models.Scores;
 
@@ -15,15 +10,15 @@ namespace OsuSharp.Models.Scores;
 /// </summary>
 public class UserBeatmapScore
 {
-    /// <summary>
-    /// The position of the score on the map leaderboards.
-    /// </summary>
-    [JsonProperty("position")]
-    public int Position { get; private set; }
+  /// <summary>
+  /// The position of the score on the map leaderboards.
+  /// </summary>
+  [JsonProperty("position")]
+  public int Position { get; private set; }
 
-    /// <summary>
-    /// The actual score represented by this <see cref="UserBeatmapScore"/> object.
-    /// </summary>
-    [JsonProperty("score")]
-    public Score Score { get; private set; } = default!;
+  /// <summary>
+  /// The actual score represented by this <see cref="UserBeatmapScore"/> object.
+  /// </summary>
+  [JsonProperty("score")]
+  public Score Score { get; private set; } = default!;
 }

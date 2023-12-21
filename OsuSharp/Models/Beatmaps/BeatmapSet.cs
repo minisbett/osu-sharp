@@ -1,13 +1,7 @@
 ﻿using Newtonsoft.Json;
-using OsuSharp.Converters;
 using OsuSharp.Enums;
 using OsuSharp.Models.Discussions;
 using OsuSharp.Models.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuSharp.Models.Beatmaps;
 
@@ -167,7 +161,7 @@ public class BeatmapSet
   /// The description of this beatmapset. This is an optional property and may be null.
   /// </summary>
   [JsonProperty("description")]
-  public BeatmapSetDescription? Description { get; private set; }
+  public Text? Description { get; private set; }
 
   /// <summary>
   /// The discussions on this beatmapset. This is an optional property and may be null.

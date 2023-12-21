@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using OsuSharp.Converters;
-using OsuSharp.Converters;
 using OsuSharp.Enums;
 using OsuSharp.Models.Users;
 

@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OsuSharp.Converters;
 using OsuSharp.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuSharp.Models.Beatmaps;
 
@@ -17,28 +12,28 @@ namespace OsuSharp.Models.Beatmaps;
 /// </summary>
 public class Nomination
 {
-    /// <summary>
-    /// The ID of the beatmapset that this nomination is for.
-    /// </summary>
-    [JsonProperty("beatmapset_id")]
-    public int BeatmapSetId { get; private set; }
+  /// <summary>
+  /// The ID of the beatmapset that this nomination is for.
+  /// </summary>
+  [JsonProperty("beatmapset_id")]
+  public int BeatmapSetId { get; private set; }
 
-    /// <summary>
-    /// The rulesets in which this nomination is valid.
-    /// </summary>
-    [JsonProperty("rulesets")]
-    [JsonConverter(typeof(StringEnumConverter))]
-    public Ruleset[] Rulesets { get; private set; } = default!;
+  /// <summary>
+  /// The rulesets in which this nomination is valid.
+  /// </summary>
+  [JsonProperty("rulesets")]
+  [JsonConverter(typeof(StringEnumConverter))]
+  public Ruleset[] Rulesets { get; private set; } = default!;
 
-    /// <summary>
-    /// TODO: what is this?
-    /// </summary>
-    [JsonProperty("reset")]
-    public bool Reset { get; private set; }
+  /// <summary>
+  /// TODO: what is this?
+  /// </summary>
+  [JsonProperty("reset")]
+  public bool Reset { get; private set; }
 
-    /// <summary>
-    /// The ID of the user that performed this nomination.
-    /// </summary>
-    [JsonProperty("user_id")]
-    public int UserId { get; private set; }
+  /// <summary>
+  /// The ID of the user that performed this nomination.
+  /// </summary>
+  [JsonProperty("user_id")]
+  public int UserId { get; private set; }
 }

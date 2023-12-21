@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OsuSharp.Converters;
 using OsuSharp.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuSharp.Models.Users;
 
@@ -45,7 +40,7 @@ public class AccountHistoryEntry
   /// Bool whether the action taken in this history entry is permanent.
   /// </summary>
   [JsonProperty("permanent")]
-  public bool IsPermanent {  get; private set; }
+  public bool IsPermanent { get; private set; }
 
   /// <summary>
   /// The datetime at which this history entry was created.

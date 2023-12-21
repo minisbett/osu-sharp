@@ -92,8 +92,8 @@ Comments (100% 2/2)
 Events (0% 0/1)
   [ ] /events
 
-Forum (0% 0/1)
-  [ ] /forums/topics/{topic}
+Forum (100% 1/1)
+  [✓] /forums/topics/{topic}
 
 Home (0% 0/1)
   [ ] /search

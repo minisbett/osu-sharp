@@ -2,8 +2,6 @@
 using Newtonsoft.Json.Linq;
 using OsuSharp.Converters;
 using OsuSharp.Models;
-using OsuSharp.Models.Responses;
-using System;
 using System.Net;
 using System.Net.Http.Headers;
 
@@ -105,7 +103,7 @@ public partial class OsuApiClient
     try
     {
       // Send the request and validate the response. If 404 is returned, return null.
-      HttpResponseMessage response = await _http.SendAsync(new HttpRequestMessage(method ?? HttpMethod.Get, $"{url}?{BuildQueryString(parameters)}"));
+      HttpResponseMessage response = await _http.SendAsync(new HttpRequestMessage(method ?? HttpMethod.Get, $"{url}{BuildQueryString(parameters)}"));
       if (response.StatusCode == HttpStatusCode.NotFound)
         return default;
 
@@ -151,7 +149,7 @@ public partial class OsuApiClient
     do
     {
       // Send the request, parse the response JSON and validate the response.
-      HttpResponseMessage response = await _http.GetAsync($"{endpoint}?{BuildQueryString(parameters)}");
+      HttpResponseMessage response = await _http.GetAsync($"{endpoint}{BuildQueryString(parameters)}");
       CursorResponse<T>? cResponse = JsonConvert.DeserializeObject<CursorResponse<T>>(await response.Content.ReadAsStringAsync(), new CursorResponseConverter<T>());
       if (cResponse is null)
         throw new OsuApiException($"An error occurred while requesting the {typeof(T).Name.ToLower()} items. (cResponse is null)");
@@ -173,6 +171,11 @@ public partial class OsuApiClient
   /// <returns>The query parameter string.</returns>
   private string BuildQueryString(Dictionary<string, string?> parameters)
   {
-    return string.Join("&", parameters.Where(x => x.Value is not null).Select(x => $"{x.Key}={x.Value}"));
+    // If no parameters are specified, return an empty string.
+    if (parameters.Count == 0)
+      return "";
+
+    // Otherwise construct the query string, including the "?".
+    return "?" + string.Join("&", parameters.Where(x => x.Value is not null).Select(x => $"{x.Key}={x.Value}"));
   }
 }

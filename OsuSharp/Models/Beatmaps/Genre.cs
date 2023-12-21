@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OsuSharp.Models.Beatmaps;
+﻿namespace OsuSharp.Models.Beatmaps;
 
 /// <summary>
 /// Represents the genre of a beatmapset.
@@ -14,13 +8,13 @@ namespace OsuSharp.Models.Beatmaps;
 /// </summary>
 public class Genre
 {
-    /// <summary>
-    /// The ID of this genre. This may be null.
-    /// </summary>
-    public int? Id { get; internal set; }
+  /// <summary>
+  /// The ID of this genre. This may be null.
+  /// </summary>
+  public int? Id { get; internal set; }
 
-    /// <summary>
-    /// The name of this genre.
-    /// </summary>
-    public string Name { get; internal set; } = default!;
+  /// <summary>
+  /// The name of this genre.
+  /// </summary>
+  public string Name { get; internal set; } = default!;
 }

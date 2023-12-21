@@ -2,7 +2,6 @@
 using OsuSharp.Models.Beatmaps;
 using OsuSharp.Models.Scores;
 using OsuSharp.Models.Users;
-using System.Runtime.Serialization;
 using System.Web;
 
 namespace OsuSharp;
@@ -91,7 +90,7 @@ public partial class OsuApiClient
   public async Task<Score[]?> GetUserBeatmapScoresAsync(int beatmapId, int userId, Ruleset? ruleset = null)
   {
     // Send the request and return the score objects.
-    return await GetFromJsonAsync<Score[]>($"beatmaps/{beatmapId}/scores/users/{userId}/all?{query}", new Dictionary<string, string?>()
+    return await GetFromJsonAsync<Score[]>($"beatmaps/{beatmapId}/scores/users/{userId}/all", new Dictionary<string, string?>()
     {
       { "mode", ruleset?.ToString() }
     }, x => x["scores"]);
@@ -130,7 +129,7 @@ public partial class OsuApiClient
   public async Task<BeatmapExtended[]> GetBeatmapsAsync(params int[] ids)
   {
     // Send the request and return the beatmap objects.
-    return (await GetFromJsonAsync<BeatmapExtended[]>($"beatmaps?{string.Join("&", ids.Select(x => $"ids[]={x}"))}", x => x["beatmaps"]))!;
+    return (await GetFromJsonAsync<BeatmapExtended[]>($"beatmaps?{string.Join("&", ids.Select(x => $"ids[]={x}"))}", jsonSelector: x => x["beatmaps"]))!;
   }
 
   /// <summary>
@@ -160,6 +159,6 @@ public partial class OsuApiClient
   public async Task<DifficultyAttributes?> GetDifficultyAttributesAsync(int id)
   {
     // Send the request and return the difficulty attributes object.
-    return await GetFromJsonAsync<DifficultyAttributes>($"beatmaps/{id}/attributes", x => x["attributes"], HttpMethod.Post);
+    return await GetFromJsonAsync<DifficultyAttributes>($"beatmaps/{id}/attributes", jsonSelector: x => x["attributes"], method: HttpMethod.Post);
   }
 }

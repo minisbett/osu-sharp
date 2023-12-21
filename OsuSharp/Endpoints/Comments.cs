@@ -1,12 +1,5 @@
 ﻿using OsuSharp.Enums;
-using OsuSharp.Models.Beatmaps;
 using OsuSharp.Models.Comments;
-using OsuSharp.Models.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuSharp;
 

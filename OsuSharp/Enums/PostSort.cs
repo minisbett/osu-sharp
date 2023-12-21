@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OsuSharp.Enums;
+﻿namespace OsuSharp.Enums;
 
 /// <summary>
 /// An enum containing the sorting options for posts of forum topics.

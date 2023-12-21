@@ -1,9 +1,5 @@
 ﻿using OsuSharp.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OsuSharp.Models.Forums;
 
 namespace OsuSharp;
 
@@ -26,10 +22,11 @@ public partial class OsuApiClient
   /// <param name="start">The ID of the first post to return. Only applies if <paramref name="sort"/> is <see cref="PostSort.IDAscending"/>.</param>
   /// <param name="end">The ID of the last post to return. Only applies if <paramref name="sort"/> is <see cref="PostSort.IDDescending"/>.</param>
   /// <returns>An asynchronous enumerable for lazily enumerating over the posts of tthe forum topic.</returns>
-  public IAsyncEnumerable<ForumPost> GetForumTopicAsync(int topicId, PostSort sort = PostSort.IDAscending, int limit = 20, int? start = null, int? end = null)
+  public IAsyncEnumerable<ForumPostBundle> GetForumTopicAsync(int topicId, PostSort sort = PostSort.IDAscending, int limit = 20, int? start = null,
+                                                              int? end = null)
   {
     // Return the asynchronous enumerable.
-    return EnumerateAsync<ForumPost>($"forum/topics/{topicId}", new Dictionary<string, string?>()
+    return EnumerateAsync<ForumPostBundle>($"forum/topics/{topicId}", new Dictionary<string, string?>()
     {
       { "sort", sort.ToString() },
       { "limit", limit.ToString() },
@@ -37,9 +34,4 @@ public partial class OsuApiClient
       { "end", end?.ToString() }
     });
   }
-}
-
-public class ForumPost
-{
-
 }

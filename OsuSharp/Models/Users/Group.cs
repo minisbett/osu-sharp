@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
 using OsuSharp.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuSharp.Models.Users;
 
@@ -26,7 +21,7 @@ public class Group
   /// The description of this group.
   /// </summary>
   [JsonProperty("description")]
-  public GroupDescription? Description { get; private set; }
+  public Text? Description { get; private set; }
 
   /// <summary>
   /// TODO: what is this?

@@ -1,10 +1,4 @@
-﻿using OsuSharp.Models;
-using OsuSharp.Models.Beatmaps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OsuSharp.Models.Beatmaps;
 
 namespace OsuSharp;
 

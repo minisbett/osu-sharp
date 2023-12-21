@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuSharp.Models.Beatmaps;
 
@@ -15,15 +10,15 @@ namespace OsuSharp.Models.Beatmaps;
 /// </summary>
 public class Failtimes
 {
-    /// <summary>
-    /// The amount of times players have exited the beatmap at a certain percentage. This may be null.
-    /// </summary>
-    [JsonProperty("exit")]
-    public int[]? Exits { get; private set; }
+  /// <summary>
+  /// The amount of times players have exited the beatmap at a certain percentage. This may be null.
+  /// </summary>
+  [JsonProperty("exit")]
+  public int[]? Exits { get; private set; }
 
-    /// <summary>
-    /// The amount of times players have failed the beatmap at a certain percentage. This may be null.
-    /// </summary>
-    [JsonProperty("fail")]
-    public int[]? Fails { get; private set; }
+  /// <summary>
+  /// The amount of times players have failed the beatmap at a certain percentage. This may be null.
+  /// </summary>
+  [JsonProperty("fail")]
+  public int[]? Fails { get; private set; }
 }

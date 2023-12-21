@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OsuSharp.Models.Beatmaps;
+﻿namespace OsuSharp.Models.Beatmaps;
 
 /// <summary>
 /// The base class for the events of a beatmapset.
@@ -14,5 +8,5 @@ namespace OsuSharp.Models.Beatmaps;
 /// </summary>
 public class BeatmapSetEvent
 {
-    // TODO: Implement lol
+  // TODO: Implement lol
 }
