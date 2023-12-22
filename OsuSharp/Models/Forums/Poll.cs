@@ -41,6 +41,12 @@ public class Poll
   public int MaxVotes { get; private set; }
 
   /// <summary>
+  /// The options of the poll.
+  /// </summary>
+  [JsonProperty("options")]
+  public PollOption[] Options { get; private set; } = default!;
+
+  /// <summary>
   /// The datetime at which the poll was started.
   /// </summary>
   [JsonProperty("started_at")]
