@@ -37,7 +37,7 @@ Every model and every endpoint method is well documented, containing both refere
 
 ## Asynchronous Enumerables for pagination
 
-For API endpoints that have pagination, osu-sharp provides an `IAsyncEnumerable` allowing you to treat the data received from the endpoint as an enumerable. It automatically performs further pagination requests as necessary, making working with it very easy and straight-forward. Below, you can find an example.
+For API endpoints that have *cursor-based* pagination (no ability to request a specific page), osu-sharp provides an `IAsyncEnumerable` allowing you to treat the data received from the endpoint as an enumerable. It automatically performs further pagination requests as necessary, making working with it very easy and straight-forward. Below, you can find an example.
 ```cs
 // Create the client.
 OsuApiClient client = new OsuApiClient(clientId, clientSecret);
