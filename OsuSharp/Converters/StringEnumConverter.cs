@@ -60,7 +60,7 @@ internal class StringEnumConverter : JsonConverter
       // Write the description attribute value to the writer.
       writer.WriteValue(descriptionAttribute.Description);
     }
-
-    throw new JsonSerializationException($"{value?.GetType()} is not an enum value or array.");
+    else
+      throw new JsonSerializationException($"{value?.GetType()} is not an enum value or array.");
   }
 }

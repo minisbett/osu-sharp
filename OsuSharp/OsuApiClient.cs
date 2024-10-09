@@ -116,8 +116,18 @@ public partial class OsuApiClient
 
     try
     {
+      // Fallback to GET if nothing else is provided
+      method ??= HttpMethod.Get;
+
+      // Prepare HTTP request
+      var message = new HttpRequestMessage(method, method == HttpMethod.Get ? $"{url}?{BuildQueryString(parameters)}" : url);
+
+      // Append POST body if required
+      if (method == HttpMethod.Post)
+        message.Content = new StringContent(JsonConvert.SerializeObject(parameters, _jsonSettings), System.Text.Encoding.Default, "application/json");
+
       // Send the request and validate the response. If 404 is returned, return null.
-      HttpResponseMessage response = await _http.SendAsync(new HttpRequestMessage(method ?? HttpMethod.Get, $"{url}?{BuildQueryString(parameters)}"));
+      HttpResponseMessage response = await _http.SendAsync(message);
       if (response.StatusCode == HttpStatusCode.NotFound)
         return default;
 
@@ -165,6 +175,9 @@ public partial class OsuApiClient
       else if (kvp.Value is DateTime dt)
         // Use the ISO 8601 format for dates.
         str += dt.ToString("o");
+      else if (kvp.Value is bool b)
+        // Ensure all bools are passed in lower-case.
+        str += b.ToString().ToLower();
       else
         str += HttpUtility.HtmlEncode(kvp.Value!.ToString());
     }
