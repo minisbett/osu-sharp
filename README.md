@@ -34,13 +34,13 @@ Install-Package osu-sharp
 
 ## 🚀 Getting Started
 
-This wrapper is meant to be integrated into [.NET Generic Host](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder). It can also be used standalone, an overview on how to get started without the .NET Generic Host can be found [further below](#stand-alone-usage).
+This library is primary designed to be integrated with the [.NET Generic Host](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder). It can also be used stand-alone, an overview on how to get started without the .NET Generic Host can be found [below](#️-using-osu-sharp-stand-alone).
 
 Every model and every endpoint is well documented, including:
-- Documentation of [almost](#contribute) every property and parameter, beyond what the official osu! API documentation provides
+- Documentation of [almost](#-contribute) everything, beyond what the official osu! API documentation provides
 - References to the osu! API documentation & osu-web source-code
 - API notes found in the official osu! API documentation
-- Information on what API errors to expect on each endpoint
+- Information about the API errors to expect on each endpoint
 
 As for the authorization flow, there are multiple `IOsuAccessTokenProvider` to choose from:
 | IOsuAccessTokenProvider    | Authorization Flow | Usage |
@@ -50,9 +50,9 @@ As for the authorization flow, there are multiple `IOsuAccessTokenProvider` to c
 | `OsuDelegateAccessTokenProvider`    | Authorization using an access token provided via a delegate (eg. for fetching from a database)    | `new(cancellationToken => ...)`
 
 > [!TIP]
-> You can also write your own access token provider by inheriting `IOsuAccessTokenProvider`, and use it to register the service.
+> You can also write your own access token provider by inheriting `IOsuAccessTokenProvider`.
 
-### ⚙️ Using osu-sharp with .NET Generic Host
+### ⚙️ Using osu-sharp with the .NET Generic Host
 The API wrapper provides an extension method for registering the `OsuApiClient`. It is registered as a scoped service, and the access tokens are provided via a singleton `IOsuAccessTokenProvider`. Optionally, the API client can be configured.
 
 Here is an example on how to register an `OsuApiClient`:
@@ -67,7 +67,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddHostedService<TestService>();
         services.AddOsuApiClient(
             OsuClientAccessTokenProvider.FromEnvironmentVariables("OSU_ID", "OSU_SECRET"),
-            (options, _) =>
+            (options, services) =>
             {
                 options.EnableLogging = true;
             });
@@ -86,7 +86,7 @@ public class TestService(OsuApiClient client) : BackgroundService
 ```
 
 ### 🏗️ Using osu-sharp stand-alone
-To use the `OsuApiClient` without the .NET Generic Host, there are some criteria to be considered, as this library was primarily designed with it in mind.
+To use the `OsuApiClient` without the .NET Generic Host, there are certain criteria to be considered, as this library was primarily designed with it in mind.
 
 Briefly said, you create an instance of the `IOsuAccessTokenProvider` providing the desired authorization flow, and using that you create an instance of the `OsuApiClient`:
 ```cs
@@ -100,16 +100,16 @@ OsuApiClientOptions options = new()
 OsuApiClient client = new(provider, options, null! /* ILogger instance, set to null for stand-alone usage*/);
 ```
 > [!IMPORTANT]
-> Since the logging is based on the `Microsoft.Extensions.Logging.ILogger<T>`, logging needs to be disabled and the logger set to null.
+> Since the logging is based on the `Microsoft.Extensions.Logging.ILogger<T>`, a part of the .NET Generic Host, logging needs to be disabled and the logger set to null.
 
 ## ⚠️ Error Handling
 
 The response returned from the endpoint methods are of type `APIResult<T>`. This type wraps the data returned from the osu! API, or provides the error if the API returned one. Additionally, osu-sharp interprets the error message provided by the osu! API and provides an `APIErrorType` for common errors. This can help handle different kinds of errors in individual ways.
 
 > [!TIP]
-> The xmldoc for the entrypoint methods always provides the `APIErrorType` the endpoints are known to return, as well as when they do it, so you always know which errors to expect.
+> The xmldoc for the entrypoint methods always provide the `APIErrorType` the endpoints are expected to return, as well as when they do it, so you always know which errors to expect.
 
-Here is an example:
+Here is an example on how to handle the response of a `GetUserBeatmapScoreAsync` API call:
 ```cs
 APIResult<UserBeatmapScore> result = await client.GetUserBeatmapScoreAsync(4697929, 7981241, cancellationToken: cancellationToken);
 if (result.IsSuccess)
@@ -122,12 +122,21 @@ else
     logger.LogError("{Message}", result.Error.Message);
 ```
 
+## 🌱 Contribute
 
-## 🤝 Contribute
+This library is continuously maintained, and contributions are always welcome. Whether it's improving documentation, adding new features, or updating existing code, every contribution helps keep the project up-to-date and easy-to-use.
 
-This library is very maintenance-intensive, as it provides a lot of detailed documentation. If you'd like to help adding documentation to the few parts that are currently not documented, or you found an incorrect documentation, feel free to create an issue or open a pull request!
+**📝 Improve Documentation**  
+Some parts of the documentation are still missing. If you encounter some, and you can provide information about it, any contributions filling the gaps are much appreciated!
 
-As for the API coverage and keeping the API models up-to-date, feel free to propose new endpoints or report changes to them via a GitHub issue, or even implement them via a pull request. The same goes for API models that might be outdated due to API changes existing ones or API models. I greatly appreciate any help in keeping this API wrapper updated and easy-to-use.
+**🔧 Add or Update API Endpoints**  
+Not all endpoints the API provides are implemented. If you require a missing endpoint, feel free to propose it using a [GitHub issue](https://github.com/minisbett/osu-sharp/issues) or implement it via a [pull request](https://github.com/minisbett/osu-sharp/pulls). Similarily, feel free to contribute if you notice an outdated endpoint, as the osu! API evolves over time.
+
+**🆙 Update API Models**  
+If any API models are outdated due to changes in the osu! API, feel free to report it via a [GitHub issue](https://github.com/minisbett/osu-sharp/issues) or update them via a [pull request](https://github.com/minisbett/osu-sharp/pulls).
+
+**🗣️ Report Issues**  
+If something isn't working as expected, open an issue with a detailed description so the problem can be addressed promptly.
 
 ## 📜 API Coverage
 
