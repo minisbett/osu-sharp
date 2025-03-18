@@ -111,7 +111,7 @@ The response returned from the endpoint methods are of type `APIResult<T>`. This
 
 Here is an example on how to handle the response of a `GetUserBeatmapScoreAsync` API call:
 ```cs
-APIResult<UserBeatmapScore> result = await client.GetUserBeatmapScoreAsync(4697929, 7981241, cancellationToken: cancellationToken);
+APIResult<UserBeatmapScore> result = await client.GetUserBeatmapScoreAsync(4697929, 7981241);
 if (result.IsSuccess)
     logger.LogInformation("PP: {PP}", result.Value!.Score.PP);
 else if (result.Error.Type is APIErrorType.BeatmapNotFound)
