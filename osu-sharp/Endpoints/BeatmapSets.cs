@@ -1,5 +1,4 @@
 ﻿using osu_sharp.Models.Beatmaps;
-using System.Threading;
 
 namespace osu_sharp;
 

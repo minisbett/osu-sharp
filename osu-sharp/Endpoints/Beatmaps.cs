@@ -1,7 +1,6 @@
 ﻿using osu_sharp.Enums;
 using osu_sharp.Models.Beatmaps;
 using osu_sharp.Models.Scores;
-using System.Reflection.Metadata.Ecma335;
 
 namespace osu_sharp;
 
