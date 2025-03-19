@@ -1,8 +1,9 @@
-name: Deployment
+name: Publish
 
 on:
   push:
-    branches: [ "release" ]
+    tags:
+      - 'v*'
 
 jobs:
   deploy:
@@ -10,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up .NET
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
@@ -19,9 +20,7 @@ jobs:
         run: dotnet build osu.NET/osu.NET.csproj --configuration Release
 
       - name: Pack
-        run: dotnet pack osu.NET/osu.NET.csproj --configuration Release --no-build
+        run: dotnet pack osu.NET/osu.NET.csproj --configuration Release -o artifacts --no-build
 
-      - name: Publish Package
-        run: dotnet nuget push osu.NET/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      - name: Publish to NuGet
+        run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
