@@ -1,9 +1,9 @@
 <div align="center">
 
-# osu-sharp
+# osu.NET
 
 [![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0)
-[![NuGet](https://img.shields.io/nuget/v/osu-sharp?color=blue&style=flat-square)](https://www.nuget.org/packages/osu-sharp)
+[![NuGet](https://img.shields.io/nuget/v/osu.NET?color=blue&style=flat-square)](https://www.nuget.org/packages/osu.NET)
 [![API Coverage](https://img.shields.io/badge/API%20Coverage-65%25-yellowgreen?style=flat-square)](#api-coverage)
 
 A modern and well documented API wrapper for the osu! API v2.<br/>
@@ -23,18 +23,18 @@ This wrapper <ins>currently only supports public scope endpoints</ins>.<br/>
 ✔️ **Flexible Authentication Flow** – Easy-to-use authorization infrastructure  
 ✔️ **Actively Maintained** – Contributions welcome!  
 ### 📦 Installation  
-osu-sharp is available via NuGet:
+osu.NET is available via NuGet:
 ```sh
 # via the dotnet CLI
-dotnet add package osu-sharp
+dotnet add package osu.NET
 
 # via the Package Manager CLI
-Install-Package osu-sharp
+Install-Package osu.NET
 ```
 
 ## 🚀 Getting Started
 
-This library is primary designed to be integrated with the [.NET Generic Host](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder). It can also be used stand-alone, an overview on how to get started without the .NET Generic Host can be found [below](#️-using-osu-sharp-stand-alone).
+This library is primary designed to be integrated with the [.NET Generic Host](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder). It can also be used stand-alone, an overview on how to get started without the .NET Generic Host can be found [below](#️-using-osu.NET-stand-alone).
 
 Every model and every endpoint is well documented, including:
 - Documentation of [almost](#-contribute) everything, beyond what the official osu! API documentation provides
@@ -52,7 +52,7 @@ As for the authorization flow, there are multiple `IOsuAccessTokenProvider` to c
 > [!TIP]
 > You can also write your own access token provider by inheriting `IOsuAccessTokenProvider`.
 
-### ⚙️ Using osu-sharp with the .NET Generic Host
+### ⚙️ Using osu.NET with the .NET Generic Host
 The API wrapper provides an extension method for registering the `OsuApiClient`. It is registered as a scoped service, and the access tokens are provided via a singleton `IOsuAccessTokenProvider`. Optionally, the API client can be configured.
 
 Here is an example on how to register an `OsuApiClient`:
@@ -85,7 +85,7 @@ public class TestService(OsuApiClient client) : BackgroundService
 }
 ```
 
-### 🏗️ Using osu-sharp stand-alone
+### 🏗️ Using osu.NET stand-alone
 To use the `OsuApiClient` without the .NET Generic Host, there are certain criteria to be considered, as this library was primarily designed with it in mind.
 
 Briefly said, you create an instance of the `IOsuAccessTokenProvider` providing the desired authorization flow, and using that you create an instance of the `OsuApiClient`:
@@ -104,7 +104,7 @@ OsuApiClient client = new(provider, options, null! /* ILogger instance, set to n
 
 ## ⚠️ Error Handling
 
-The response returned from the endpoint methods are of type `APIResult<T>`. This type wraps the data returned from the osu! API, or provides the error if the API returned one. Additionally, osu-sharp interprets the error message provided by the osu! API and provides an `APIErrorType` for common errors. This can help handle different kinds of errors in individual ways.
+The response returned from the endpoint methods are of type `APIResult<T>`. This type wraps the data returned from the osu! API, or provides the error if the API returned one. Additionally, osu.NET interprets the error message provided by the osu! API and provides an `APIErrorType` for common errors. This can help handle different kinds of errors in individual ways.
 
 > [!TIP]
 > The xmldoc for the entrypoint methods always provide the `APIErrorType` the endpoints are expected to return, as well as when they do it, so you always know which errors to expect.
@@ -130,10 +130,10 @@ This library is continuously maintained, and contributions are always welcome. W
 Some parts of the documentation are still missing. If you encounter some, and you can provide information about it, any contributions filling the gaps are much appreciated!
 
 **🔧 Add or Update API Endpoints**  
-Not all endpoints the API provides are implemented. If you require a missing endpoint, feel free to propose it using a [GitHub issue](https://github.com/minisbett/osu-sharp/issues) or implement it via a [pull request](https://github.com/minisbett/osu-sharp/pulls). Similarily, feel free to contribute if you notice an outdated endpoint, as the osu! API evolves over time.
+Not all endpoints the API provides are implemented. If you require a missing endpoint, feel free to propose it using a [GitHub issue](https://github.com/minisbett/osu.NET/issues) or implement it via a [pull request](https://github.com/minisbett/osu.NET/pulls). Similarily, feel free to contribute if you notice an outdated endpoint, as the osu! API evolves over time.
 
 **🆙 Update API Models**  
-If any API models are outdated due to changes in the osu! API, feel free to report it via a [GitHub issue](https://github.com/minisbett/osu-sharp/issues) or update them via a [pull request](https://github.com/minisbett/osu-sharp/pulls).
+If any API models are outdated due to changes in the osu! API, feel free to report it via a [GitHub issue](https://github.com/minisbett/osu.NET/issues) or update them via a [pull request](https://github.com/minisbett/osu.NET/pulls).
 
 **🗣️ Report Issues**  
 If something isn't working as expected, open an issue with a detailed description so the problem can be addressed promptly.
