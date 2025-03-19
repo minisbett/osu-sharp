@@ -1,4 +1,6 @@
-﻿namespace osu_sharp.Enums;
+﻿using osu_sharp.Helpers;
+
+namespace osu_sharp.Enums;
 
 /// <summary>
 /// Represents the type of scores associated with a user. (recent scores, first place scores, etc.)

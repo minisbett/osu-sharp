@@ -26,6 +26,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <Analyzer Include="..\APIErrorHandlingAnalyzer\APIErrorHandlingAnalyzer\bin\Debug\netstandard2.0\osu-sharp.Analyzers.dll" />
   </ItemGroup>
 
 </Project>

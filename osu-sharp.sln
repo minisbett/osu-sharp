@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu-sharp", "osu-sharp\osu-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{1AA22D47-C3AF-4E07-BB7E-87FFF8AE99BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu-sharp.Analyzers", "APIErrorHandlingAnalyzer\APIErrorHandlingAnalyzer\osu-sharp.Analyzers.csproj", "{FF54208E-0E34-4387-9E6C-0D10107B28D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1AA22D47-C3AF-4E07-BB7E-87FFF8AE99BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AA22D47-C3AF-4E07-BB7E-87FFF8AE99BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AA22D47-C3AF-4E07-BB7E-87FFF8AE99BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF54208E-0E34-4387-9E6C-0D10107B28D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF54208E-0E34-4387-9E6C-0D10107B28D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF54208E-0E34-4387-9E6C-0D10107B28D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF54208E-0E34-4387-9E6C-0D10107B28D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

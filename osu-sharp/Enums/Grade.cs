@@ -1,4 +1,6 @@
-﻿namespace osu_sharp.Enums;
+﻿using osu_sharp.Helpers;
+
+namespace osu_sharp.Enums;
 
 /// <summary>
 /// Represents the grade a score can have. (XH, SH, X, S, A, B, C, D)
@@ -36,7 +38,7 @@ public enum Grade
 
   /// <summary>
   /// A-rank accuracy, any mod.
-  /// </summary
+  /// </summary>
   [JsonAPIName("a")]
   A,
 

@@ -1,4 +1,6 @@
-﻿namespace osu_sharp.Enums;
+﻿using osu_sharp.Helpers;
+
+namespace osu_sharp.Enums;
 
 /// <summary>
 /// Represents the name of an update stream (stable40, beta40, cuttingedge, lazer, web).

@@ -3,7 +3,7 @@
 namespace osu_sharp.Models.Beatmaps;
 
 /// <summary>
-/// Represents an extended beatmapset, inheriting from <see cref="Beatmapset"/> and including additional properties.
+/// Represents an extended beatmapset, inheriting from <see cref="BeatmapSet"/> and including additional properties.
 /// The API differentiates between "normal" beatmapsets and "extended" beatmapsets, as not all information is available on all endpoints.
 /// <br/><br/>
 /// API docs: <a href="https://osu.ppy.sh/docs/index.html#beatmapsetextended"/><br/>

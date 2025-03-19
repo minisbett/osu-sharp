@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Web;
 
-namespace osu_sharp;
+namespace osu_sharp.Helpers;
 
 /// <summary>
 /// Provides extension and utility methods for the API wrapper.

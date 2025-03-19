@@ -1,4 +1,5 @@
-﻿using osu_sharp.Models.Wikis;
+﻿using osu_sharp.Helpers;
+using osu_sharp.Models.Wikis;
 
 namespace osu_sharp;
 
@@ -21,6 +22,7 @@ public partial class OsuApiClient
   /// <param name="path">The path of the wiki page.</param>
   /// <param name="cancellationToken">Optional. The cancellation token for aborting the request.</param>
   /// <returns>The wiki page at the specified path in the specified locale.</returns>
+  [CanReturnAPIError(APIErrorType.WikiPageNotFound)]
   public async Task<APIResult<WikiPage>> GetWikiPageAsync(string locale, string path, CancellationToken cancellationToken)
     => (await GetAsync<WikiPage>($"wiki/{locale}/{path}", cancellationToken)).WithErrorFallback(APIErrorType.WikiPageNotFound);
 }

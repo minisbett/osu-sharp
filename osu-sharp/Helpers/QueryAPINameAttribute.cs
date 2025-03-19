@@ -1,4 +1,4 @@
-﻿namespace osu_sharp;
+﻿namespace osu_sharp.Helpers;
 
 /// <summary>
 /// Attaches a string representation in a REST-URL or query parameter to an enum field.

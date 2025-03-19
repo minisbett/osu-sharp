@@ -1,4 +1,6 @@
-﻿namespace osu_sharp.Enums;
+﻿using osu_sharp.Helpers;
+
+namespace osu_sharp.Enums;
 
 /// <summary>
 /// An enum representing the type of a beatmapset discussion.

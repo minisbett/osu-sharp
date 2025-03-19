@@ -1,4 +1,6 @@
-﻿namespace osu_sharp.Enums;
+﻿using osu_sharp.Helpers;
+
+namespace osu_sharp.Enums;
 
 /// <summary>
 /// Represents the playstyle of a user. A user can have multiple playstyles.

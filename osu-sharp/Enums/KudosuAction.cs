@@ -1,4 +1,6 @@
-﻿namespace osu_sharp.Enums;
+﻿using osu_sharp.Helpers;
+
+namespace osu_sharp.Enums;
 
 /// <summary>
 /// Represents the type of actions that result in a <see cref="Models.Users.KudosuHistoryEntry"/>.

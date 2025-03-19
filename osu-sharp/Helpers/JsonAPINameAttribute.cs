@@ -1,4 +1,4 @@
-﻿namespace osu_sharp;
+﻿namespace osu_sharp.Helpers;
 
 /// <summary>
 /// Attaches a string representation in the JSON response of an API request to an enum field.<br/>

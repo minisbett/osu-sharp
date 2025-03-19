@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using osu_sharp.Enums;
 
 namespace osu_sharp.Models.Beatmaps;
 
@@ -50,7 +51,7 @@ public class BeatmapPack
   /// The beatmap sets included in the beatmap pack.<br/><br/>
   /// API notes:
   /// <list type="bullet">
-  /// <item>This property is only available via <see cref="OsuApiClient.GetBeatmapPackAsync(string)"/></item>
+  /// <item>This property is only available via <see cref="OsuApiClient.GetBeatmapPackAsync(string, CancellationToken?)"/></item>
   /// </list>
   /// </summary>
   [JsonProperty("beatmapsets")]

@@ -1,4 +1,5 @@
-﻿using osu_sharp.Models.Beatmaps;
+﻿using osu_sharp.Helpers;
+using osu_sharp.Models.Beatmaps;
 
 namespace osu_sharp;
 
@@ -26,6 +27,7 @@ public partial class OsuApiClient
   /// <param name="beatmapId">The ID of the beatmap.</param>
   /// <param name="cancellationToken">Optional. The cancellation token for aborting the request.</param>
   /// <returns>The beatmapset containing the beatmap with the specified ID.</returns>
+  [CanReturnAPIError(APIErrorType.BeatmapNotFound)]
   public async Task<APIResult<BeatmapSetExtended>> LookupBeatmapSetAsync(int beatmapId, CancellationToken? cancellationToken = null)
     => await GetAsync<BeatmapSetExtended>($"beatmapsets/lookup", cancellationToken, new()
     {
@@ -47,6 +49,7 @@ public partial class OsuApiClient
   /// <param name="beatmapSetId">The ID of the beatmapset.</param>
   /// <param name="cancellationToken">Optional. The cancellation token for aborting the request.</param>
   /// <returns>The beatmapset with the specified ID.</returns>
+  [CanReturnAPIError(APIErrorType.BeatmapSetNotFound)]
   public async Task<APIResult<BeatmapSetExtended>> GetBeatmapSetAsync(int beatmapSetId, CancellationToken? cancellationToken = null)
     => await GetAsync<BeatmapSetExtended>($"beatmapsets/{beatmapSetId}", cancellationToken);
 }

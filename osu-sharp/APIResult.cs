@@ -43,18 +43,6 @@ public class APIResult<T> where T : class
   }
 
   /// <summary>
-  /// Sets the <see cref="APIErrorType"/> of the <see cref="Error"/> to the specified error type if the API result indicates <see cref="APIErrorType.Null"/>.
-  /// </summary>
-  /// <param name="errorType">The error to replace <see cref="APIErrorType.Null"/> with.</param>
-  internal APIResult<T> WithErrorFallback(APIErrorType errorType)
-  {
-    if (Error?.Type is APIErrorType.Null)
-      Error.Type = errorType;
-
-    return this;
-  }
-
-  /// <summary>
   /// The error returned by the osu! API. This will be null if the request was successful.
   /// </summary>
   public APIError? Error { get; }
@@ -70,6 +58,41 @@ public class APIResult<T> where T : class
   /// </summary>
   [MemberNotNullWhen(true, nameof(Error))]
   public bool IsFailure => !IsSuccess;
+
+  /// <summary>
+  /// Sets the <see cref="APIErrorType"/> of the <see cref="Error"/> to the specified error type if the API result indicates <see cref="APIErrorType.Null"/>.
+  /// </summary>
+  /// <param name="errorType">The error to replace <see cref="APIErrorType.Null"/> with.</param>
+  internal APIResult<T> WithErrorFallback(APIErrorType errorType)
+  {
+    if (Error?.Type is APIErrorType.Null)
+      Error.Type = errorType;
+
+    return this;
+  }
+
+  /// <summary>
+  /// Matches the API result to execute the corresponding success or error handler.
+  /// </summary>
+  /// <param name="success">Executed if the API request was successful, receiving the value.</param>
+  /// <param name="error">Executed if the API request failed, receiving the error.</param>
+  public void Match(Action<T?> success, Func<APIError, Action> error)
+  {
+    if (IsSuccess)
+      success(Value);
+    else
+      error(Error)();
+  }
+
+  /// <summary>
+  /// Matches the API result to execute the corresponding success or error handler, returning a value of type <typeparamref name="TReturn"/>.
+  /// </summary>
+  /// <param name="success">Executed if the API request was successful, receiving the value.</param>
+  /// <param name="error">Executed if the API request failed, receiving the error.</param>
+  public TReturn Match<TReturn>(Func<T?, TReturn> success, Func<APIError, Func<TReturn>> error)
+  {
+    return IsSuccess ? success(Value) : error(Error)();
+  }
 
   public static implicit operator APIResult<T>(APIError error) => new(error);
 

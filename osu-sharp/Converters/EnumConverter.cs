@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
+using osu_sharp.Helpers;
 using System.Collections;
 
 namespace osu_sharp.Converters;
 
 /// <summary>
-/// A <see cref="JsonConverter"/> that handles the deserialization into enums based on the <see cref="JsonAPIName"/>.
+/// A <see cref="JsonConverter"/> that handles the deserialization into enums based on the <see cref="JsonAPINameAttribute"/>.
 /// Additionally, it handles arrays of enums, dictionaries with an enum as the key type and integer conversion.
 /// </summary>
 internal class EnumConverter : JsonConverter

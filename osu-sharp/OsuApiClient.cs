@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using osu_sharp.Authorization;
+using osu_sharp.Helpers;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http.Headers;

@@ -1,4 +1,5 @@
-﻿using osu_sharp.Models.Beatmaps;
+﻿using osu_sharp.Helpers;
+using osu_sharp.Models.Beatmaps;
 
 namespace osu_sharp;
 
@@ -23,6 +24,7 @@ public partial class OsuApiClient
   /// <param name="tag">The tag of the beatmap pack.</param>
   /// <param name="cancellationToken">Optional. The cancellation token for aborting the request.</param>
   /// <returns>The beatmap pack with the specified tag.</returns>
+  [CanReturnAPIError(APIErrorType.BeatmapPackNotFound)]
   public async Task<APIResult<BeatmapPack>> GetBeatmapPackAsync(string tag, CancellationToken? cancellationToken = null)
     => await GetAsync<BeatmapPack>($"beatmaps/packs/{tag}", cancellationToken);
 }

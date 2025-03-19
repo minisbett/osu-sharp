@@ -5,7 +5,7 @@ namespace osu_sharp.Models.News;
 /// <summary>
 /// Represents a news post on the osu! website.
 /// <br/><br/>
-/// API docs: <a href="https://osu.ppy.sh/docs/index.html#newspost"><br/>
+/// API docs: <a href="https://osu.ppy.sh/docs/index.html#newspost"/><br/>
 /// Source: <a href="https://github.com/ppy/osu-web/blob/master/resources/js/interfaces/news-post-json.ts"/>
 /// </summary>
 public class NewsPost
