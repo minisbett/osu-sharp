@@ -2,8 +2,9 @@
 
 # osu.NET
 
-[![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0)
+[![License](https://img.shields.io/badge/License-GPLv3-seagreen?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0)
 [![NuGet](https://img.shields.io/nuget/v/osu.NET?color=blue&style=flat-square)](https://www.nuget.org/packages/osu.NET)
+[![NuGet](https://img.shields.io/nuget/dt/osu.NET?color=peru&style=flat-square)](https://www.nuget.org/packages/osu.NET)
 [![API Coverage](https://img.shields.io/badge/API%20Coverage-65%25-yellowgreen?style=flat-square)](#api-coverage)
 
 A modern and well documented API wrapper for the osu! API v2.<br/>
@@ -34,12 +35,11 @@ Install-Package osu.NET
 
 ## 🚀 Getting Started
 
-This library is primary designed to be integrated with the [.NET Generic Host](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder). It can also be used stand-alone, an overview on how to get started without the .NET Generic Host can be found [below](#️-using-osu.NET-stand-alone).
+This library is primary designed to be integrated with the [.NET Generic Host](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder), but can also be used [stand-alone](#️-using-osu.NET-stand-alone).
 
-Every model and every endpoint is well documented, including:
-- Documentation of [almost](#-contribute) everything, beyond what the official osu! API documentation provides
-- References to the osu! API documentation & osu-web source-code
-- API notes found in the official osu! API documentation
+Every API model and every endpoint is well documented, including:
+- Documentation of [almost](#-contribute) everything, beyond what the [osu! API documentation](https://osu.ppy.sh/docs/index.html) provides
+- References to the osu! API documentation and [osu-web](https://github.com/ppy/osu-web) source-code
 - Information about the API errors to expect on each endpoint
 
 As for the authorization flow, there are multiple `IOsuAccessTokenProvider` to choose from:
