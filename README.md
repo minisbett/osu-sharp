@@ -109,7 +109,7 @@ The API endpoint methods return an `APIResult<T>`, wrapping the data returned fr
 
 The error message provided by the API is interpreted into an `APIErrorType` for common errors, allowing to handle different errors in individual ways. Furthermore, the `APIResult<T>` type provides a `Match` method, allowing to match the result for the returned value if the request succeeded, or for the `APIError` if the requested failed.
 
-> [!TIP]
+> [!NOTE]
 > The xmldocs for the API endpoint methods always provide the `APIErrorType` the endpoints are expected to return, as well as when they do it, so you always know which errors to expect.
 
 
