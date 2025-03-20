@@ -38,12 +38,12 @@ Install-Package osu.NET
 This library is primary designed to be integrated with the [.NET Generic Host](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder), but can also be used [stand-alone](#️-using-osu.NET-stand-alone).
 
 Every API model and every endpoint is well documented, including:
-- Documentation of [almost](#-contribute) everything, beyond what the [osu! API documentation](https://osu.ppy.sh/docs/index.html) provides
+- Documentation of API model properties and endpoint parameters, beyond what the [osu! API documentation](https://osu.ppy.sh/docs/index.html) provides
 - References to the osu! API documentation and [osu-web](https://github.com/ppy/osu-web) source-code
 - Information about the API errors to expect on each endpoint
 
-As for the authorization flow, there are multiple `IOsuAccessTokenProvider` to choose from:
-| IOsuAccessTokenProvider    | Authorization Flow | Usage |
+For the authorization flow, there are multiple methods to choose from:
+| Authorization Provider    | Authorization Flow | Usage⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ |
 | -------- | ------- | ------- |
 | `OsuClientAccessTokenProvider`  | Authorization using client ID & secret    | `new(id, secret)`<br/> `.FromEnvironmentVariables(id, secret)` |
 | `OsuStaticAccessTokenProvider` | Authorization using a static access token     | `new(accessToken)` |
@@ -53,9 +53,9 @@ As for the authorization flow, there are multiple `IOsuAccessTokenProvider` to c
 > You can also write your own access token provider by inheriting `IOsuAccessTokenProvider`.
 
 ### ⚙️ Using osu.NET with the .NET Generic Host
-The API wrapper provides an extension method for registering the `OsuApiClient`. It is registered as a scoped service, and the access tokens are provided via a singleton `IOsuAccessTokenProvider`. Optionally, the API client can be configured.
+The API wrapper provides extension methods for registering the `OsuApiClient` as a scoped service. The access tokens are provided via an `IOsuAccessTokenProvider` instance provided on service registration. Optionally, the API client can be configured.
 
-Here is an example on how to register an `OsuApiClient`:
+Example:
 ```cs
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureLogging(logging =>
@@ -86,9 +86,9 @@ public class TestService(OsuApiClient client) : BackgroundService
 ```
 
 ### 🏗️ Using osu.NET stand-alone
-To use the `OsuApiClient` without the .NET Generic Host, there are certain criteria to be considered, as this library was primarily designed with it in mind.
+To use the `OsuApiClient` without the .NET Generic Host, there are some considerations to be made.
 
-Briefly said, you create an instance of the `IOsuAccessTokenProvider` providing the desired authorization flow, and using that you create an instance of the `OsuApiClient`:
+In order to get started, you create an instance of the `IOsuAccessTokenProvider` providing the desired authorization flow, and using that you create an instance of the `OsuApiClient`:
 ```cs
 OsuClientAccessTokenProvider provider = OsuClientAccessTokenProvider.FromEnvironmentVariables("OSU_ID", "OSU_SECRET");
 
@@ -104,23 +104,35 @@ OsuApiClient client = new(provider, options, null! /* ILogger instance, set to n
 
 ## ⚠️ Error Handling
 
-The response returned from the endpoint methods are of type `APIResult<T>`. This type wraps the data returned from the osu! API, or provides the error if the API returned one. Additionally, osu.NET interprets the error message provided by the osu! API and provides an `APIErrorType` for common errors. This can help handle different kinds of errors in individual ways.
+The API endpoint methods return an `APIResult<T>`, wrapping the data returned from the osu! API (`.Value`) and alternatively providing the API error if one was returned (`.Error`).
+
+The error message provided by the API is interpreted into an `APIErrorType` for common errors, allowing to handle different errors in individual ways. Furthermore, the `APIResult<T>` type provides a `Match` method, allowing to match the result for the returned value if the request succeeded, or for the `APIError` if the requested failed.
 
 > [!TIP]
-> The xmldoc for the entrypoint methods always provide the `APIErrorType` the endpoints are expected to return, as well as when they do it, so you always know which errors to expect.
+> The xmldocs for the API endpoint methods always provide the `APIErrorType` the endpoints are expected to return, as well as when they do it, so you always know which errors to expect.
 
-Here is an example on how to handle the response of a `GetUserBeatmapScoreAsync` API call:
+
+Here is an example on how to handle the response of a `GetUserBeatmapScoreAsync` API request:
 ```cs
-APIResult<UserBeatmapScore> result = await client.GetUserBeatmapScoreAsync(4697929, 7981241);
-if (result.IsSuccess)
-    logger.LogInformation("PP: {PP}", result.Value!.Score.PP);
-else if (result.Error.Type is APIErrorType.BeatmapNotFound)
-    logger.LogError("Beatmap not found.");
-else if (result.Error.Type is APIErrorType.UserOrScoreNotFound)
-    logger.LogError("The user was not found or has no scores on the beatmap.");
-else
-    logger.LogError("{Message}", result.Error.Message);
+APIResult<UserBeatmapScore> result = await client.GetUserBeatmapScoreAsync(4697929, 7562902);
+
+// You can also return a value inside the result matching lambdas, eg.:
+// double? pp = result.Match<double>(value => value?.Score.PP, error => null);
+result.Match(
+    value => logger.LogInformation("PP: {PP}", value?.Score.PP,
+    error => error.Type switch
+    {
+        APIErrorType.BeatmapNotFound => logger.LogError("The beatmap was not found."),
+        APIErrorType.UserOrScoreNotFound => logger.LogError("The User was not found or has no scores on the beatmap."),
+        _ => logger.LogError("{Message}", error.Message)
+    })
+);
 ```
+> [!TIP]
+> osu.NET provides a roslyn code analyzer for assisting with result-matching. If you match a result with the exact syntax above, matching the error directly with a `error.Type switch {...}`, the code analyzer will warn you if you have an unhandled `APIErrorType` possibly returned by the API endpoint called.
+>
+> This feature is experimental and the warning can be disabled via `#pragma warning disable OSU001`, or as suggested by your IDE.
+
 
 ## 🌱 Contribute
 
