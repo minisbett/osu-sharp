@@ -20,7 +20,7 @@ jobs:
         run: dotnet build osu.NET/osu.NET.csproj --configuration Release
 
       - name: Pack
-        run: dotnet pack osu.NET/osu.NET.csproj --configuration Release -o artifacts --no-build
+        run: dotnet pack osu.NET/osu.NET.csproj --configuration Release -o artifacts --no-build /p:Version=${GITHUB_REF#refs/tags/v}
 
       - name: Publish to NuGet
         run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
