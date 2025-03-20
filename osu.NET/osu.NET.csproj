@@ -25,6 +25,7 @@
     <PackageTags>api, api-client, osu, wrapper-api, osugame</PackageTags>
     <RepositoryUrl>https://github.com/minisbett/osu.NET</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
