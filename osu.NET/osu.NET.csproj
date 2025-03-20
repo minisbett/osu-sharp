@@ -8,25 +8,27 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\osu.NET.Analyzers\osu.NET.Analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
   <PropertyGroup>
     <PackageId>osu.NET</PackageId>
-    <Version>0.1.0-beta</Version>
     <Authors>minisbett</Authors>
     <Description>A modern, well-documented osu! API v2 wrapper written in .NET/C#.</Description>
     <PackageTags>api, api-client, osu, wrapper-api, osugame</PackageTags>
-    <RepositoryUrl>https://github.com/minisbett/osu-sharp</RepositoryUrl>
+    <RepositoryUrl>https://github.com/minisbett/osu.NET</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="../LICENSE" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <Analyzer Include="..\osu.NET.Analyzers\bin\Debug\netstandard2.0\osu.NET.Analyzers.dll" />
   </ItemGroup>
 
 </Project>
