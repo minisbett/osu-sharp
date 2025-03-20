@@ -97,11 +97,11 @@ public partial class OsuApiClient
   [CanReturnAPIError(APIErrorType.BeatmapNotFound, APIErrorType.UserOrScoreNotFound)]
   public async Task<APIResult<UserBeatmapScore>> GetUserBeatmapScoreAsync(int beatmapId, int userId, bool legacyOnly = false, Ruleset? ruleset = null,
                                                                           CancellationToken? cancellationToken = null)
-    => await GetAsync<UserBeatmapScore>($"beatmaps/{beatmapId}/scores/users/{userId}", cancellationToken, new()
+    => (await GetAsync<UserBeatmapScore>($"beatmaps/{beatmapId}/scores/users/{userId}", cancellationToken, new()
     {
       ["legacy_only"] = legacyOnly,
       ["mode"] = ruleset,
-    });
+    })).WithErrorFallback(APIErrorType.UserOrScoreNotFound);
 
   /// <summary>
   /// Returns all scores of the specified user on the specified beatmap in the specified ruleset, optionally excluding osu!lazer scores.
@@ -133,11 +133,11 @@ public partial class OsuApiClient
   [CanReturnAPIError(APIErrorType.BeatmapNotFound, APIErrorType.UserOrScoreNotFound)]
   public async Task<APIResult<Score[]>> GetUserBeatmapScoresAsync(int beatmapId, int userId, bool legacyOnly = false, Ruleset? ruleset = null,
                                                                   CancellationToken? cancellationToken = null)
-    => await GetAsync<Score[]>($"beatmaps/{beatmapId}/scores/users/{userId}/all", cancellationToken, new()
+    => (await GetAsync<Score[]>($"beatmaps/{beatmapId}/scores/users/{userId}/all", cancellationToken, new()
     {
       ["legacy_only"] = legacyOnly,
       ["ruleset"] = ruleset,
-    }, json => json["scores"]);
+    }, json => json["scores"])).WithErrorFallback(APIErrorType.UserOrScoreNotFound);
 
   /// <summary>
   /// Returns the top 50 scores on the specified beatmap in the specified ruleset.
