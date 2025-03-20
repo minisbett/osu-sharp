@@ -123,7 +123,7 @@ result.Match(
     value => logger.LogInformation("PP: {PP}", value?.Score.PP,
     error => error.Type switch
     {
-        APIErrorType.BeatmapNotFound => logger.LogError("Beatmap was not found."),
+        APIErrorType.BeatmapNotFound => logger.LogError("Beatmap not found."),
         APIErrorType.UserOrScoreNotFound => logger.LogError("User not found or has no score."),
         _ => logger.LogError("{Message}", error.Message)
     })
