@@ -38,7 +38,7 @@ Install-Package osu.NET
 This library is primary designed to be integrated with the [.NET Generic Host](https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder), but can also be used [stand-alone](#️-using-osu.NET-stand-alone).
 
 Every API model and every endpoint is well documented, including:
-- Documentation of API model properties and endpoint parameters, beyond what the [osu! API documentation](https://osu.ppy.sh/docs/index.html) provides
+- Documentation of API properties and parameters, beyond what the [osu! API documentation](https://osu.ppy.sh/docs/index.html) provides
 - References to the osu! API documentation and [osu-web](https://github.com/ppy/osu-web) source-code
 - Information about the API errors to expect on each endpoint
 
@@ -53,7 +53,7 @@ For the authorization flow, there are multiple methods to choose from:
 > You can also write your own access token provider by inheriting `IOsuAccessTokenProvider`.
 
 ### ⚙️ Using osu.NET with the .NET Generic Host
-The API wrapper provides extension methods for registering the `OsuApiClient` as a scoped service. The access tokens are provided via an `IOsuAccessTokenProvider` instance provided on service registration. Optionally, the API client can be configured.
+The API wrapper provides extension methods for registering the `OsuApiClient` as a scoped service. The access tokens are provided via an `IOsuAccessTokenProvider` instance provided on service registration, optionally the API client can be configured too.
 
 Example:
 ```cs
@@ -90,14 +90,15 @@ To use the `OsuApiClient` without the .NET Generic Host, there are some consider
 
 In order to get started, you create an instance of the `IOsuAccessTokenProvider` providing the desired authorization flow, and using that you create an instance of the `OsuApiClient`:
 ```cs
-OsuClientAccessTokenProvider provider = OsuClientAccessTokenProvider.FromEnvironmentVariables("OSU_ID", "OSU_SECRET");
+OsuClientAccessTokenProvider provider = OsuClientAccessTokenProvider
+    .FromEnvironmentVariables("OSU_ID", "OSU_SECRET");
 
 OsuApiClientOptions options = new()
 {
     EnableLogging = false // false by default, do *not* set it to true for stand-alone usage
 };
 
-OsuApiClient client = new(provider, options, null! /* ILogger instance, set to null for stand-alone usage*/);
+OsuApiClient client = new(provider, options, null! /* ILogger, set to null for stand-alone usage*/);
 ```
 > [!IMPORTANT]
 > Since the logging is based on the `Microsoft.Extensions.Logging.ILogger<T>`, a part of the .NET Generic Host, logging needs to be disabled and the logger set to null.
@@ -123,7 +124,7 @@ result.Match(
     error => error.Type switch
     {
         APIErrorType.BeatmapNotFound => logger.LogError("The beatmap was not found."),
-        APIErrorType.UserOrScoreNotFound => logger.LogError("The User was not found or has no scores on the beatmap."),
+        APIErrorType.UserOrScoreNotFound => logger.LogError("User not found or has no score."),
         _ => logger.LogError("{Message}", error.Message)
     })
 );
