@@ -18,11 +18,6 @@ public class OsuApiClientOptions
   public bool EnableLogging { get; set; } = false;
 
   /// <summary>
-  /// The user agent used for API requests.
-  /// </summary>
-  public string? UserAgent { get; set; } = null;
-
-  /// <summary>
   /// The timeout for API requests. Defaults to the default of <see cref="HttpClient.Timeout"/>, which is 100 seconds.
   /// </summary>
   public TimeSpan RequestTimeout { get; set; } = TimeSpan.FromSeconds(100);

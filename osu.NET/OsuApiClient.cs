@@ -22,8 +22,7 @@ public partial class OsuApiClient(IOsuAccessTokenProvider accessTokenProvider, O
     BaseAddress = new("https://osu.ppy.sh/api/v2/"),
     DefaultRequestHeaders =
     {
-      { "x-api-version", "20220705" },
-      { "User-Agent", options.UserAgent }
+      { "x-api-version", "20220705" }
     },
     Timeout = options.RequestTimeout
   };
