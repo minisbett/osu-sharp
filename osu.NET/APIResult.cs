@@ -120,4 +120,9 @@ public class APIResult<T> where T : class
   public static implicit operator APIResult<T>(APIError error) => new(error);
 
   public static implicit operator APIResult<T>(T? value) => new(value);
+
+  public override string ToString()
+  {
+    return IsSuccess ? $"Success: {Value}" : $"Failure: {Error}";
+  }
 }

@@ -25,7 +25,7 @@ public static class ServiceCollectionExtensions
   /// Notes:
   /// <list type="bullet">
   /// <item>The <paramref name="accessTokenProviderFactory"/> is ran on service registration as the access token provider must be a singleton instance in order to persist authorization data.</item>
-  /// <item>The <paramref name="configurator"/> is ran when the scoped <see cref="OsuApiClient"/> is created.</item>
+  /// <item>The <paramref name="configurator"/> is ran whenever the scoped <see cref="OsuApiClient"/> is created.</item>
   /// </list>
   /// </summary>
   /// <param name="services">The service collection.</param>

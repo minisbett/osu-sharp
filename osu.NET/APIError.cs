@@ -38,6 +38,11 @@ public class APIError
     return new(APIErrorType.Unknown, message);
   }
 
+  public override string ToString()
+  {
+    return $"({Type}) {Message}";
+  }
+
   /// <summary>
   /// Represents a mapping between error messages returned by the osu! API and their corresponding <see cref="APIErrorType"/>.
   /// </summary>
