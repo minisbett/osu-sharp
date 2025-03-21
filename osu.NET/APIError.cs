@@ -27,7 +27,7 @@ public class APIError
   /// the error message, or will be <see cref="APIErrorType.Unknown"/> if the error message is not associated with an <see cref="APIErrorType"/>.
   /// </summary>
   /// <param name="message">The error message provided by the osu! API.</param>
-  /// <returns></returns>
+  /// <returns>The parsed <see cref="APIError"/>.</returns>
   internal static APIError FromErrorMessage(string? message)
   {
     if (message is null)

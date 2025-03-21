@@ -237,6 +237,7 @@ public partial class OsuApiClient
   {
     // TODO: add support for specifying the ruleset (requires body content)
     string query = string.Join("&", (mods ?? []).Select(x => $"mods[]={x}"));
-    return await GetAsync<DifficultyAttributes>($"beatmaps/{beatmapId}/attributes?{query}", cancellationToken);
+    return await GetAsync<DifficultyAttributes>($"beatmaps/{beatmapId}/attributes?{query}", cancellationToken, 
+                                                jsonSelector: x => x["attributes"], method: HttpMethod.Post);
   }
 }
