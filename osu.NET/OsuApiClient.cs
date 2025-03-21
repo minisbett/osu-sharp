@@ -48,9 +48,9 @@ public partial class OsuApiClient(IOsuAccessTokenProvider accessTokenProvider, O
   private async Task<HttpResponseMessage> SendAsync(string url, Dictionary<string, object?> parameters, HttpMethod method,
                                                            CancellationToken cancellationToken)
   {
-    Stopwatch watch = Stopwatch.StartNew();
     await EnsureAccessTokenAsync(cancellationToken);
 
+    Stopwatch watch = Stopwatch.StartNew();
     HttpResponseMessage? response = null;
     try
     {
