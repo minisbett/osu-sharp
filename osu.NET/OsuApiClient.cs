@@ -109,19 +109,19 @@ public partial class OsuApiClient(IOsuAccessTokenProvider accessTokenProvider, O
     try
     {
       string json = await response.Content.ReadAsStringAsync(cancellationToken.Value);
+      JToken token = JToken.Parse(json);
+      JObject? obj = token as JObject;
 
-      // If the API responds with an error field, use it to determine which APIError object to return.
-      JValue? error = JsonConvert.DeserializeObject<dynamic>(json)?["error"];
-      if (error is not null)
+      // Check for an error attribute, indicating the API returned an error.
+      // An error attribute may only exist if an object (not an array) was returned.
+      var x = obj?["error"];
+      if (obj?["error"] is JValue error)
         return APIError.FromErrorMessage(error.Value<string>());
-      else if (response.StatusCode is not HttpStatusCode.OK) // If the request was not successful but no error message was provided, assume null
+      else if (response.StatusCode is not HttpStatusCode.OK)
         return APIError.FromErrorMessage(null);
 
-      if (typeof(T).IsArray)
-        return JArray.Parse(json).ToObject<T?>(_jsonSerializer);
-
-      JObject obj = JObject.Parse(json);
-      JToken token = jsonSelector?.Invoke(obj) ?? obj;
+      if (obj is not null && jsonSelector is not null)
+        token = jsonSelector.Invoke(obj) ?? token;
 
       return token.ToObject<T?>(_jsonSerializer);
     }

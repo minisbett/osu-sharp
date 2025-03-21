@@ -191,7 +191,8 @@ public partial class OsuApiClient
   /// <returns>The user with the specified name.</returns>
   [CanReturnAPIError(APIErrorType.UserNotFound)]
   public async Task<APIResult<UserExtended>> GetUserAsync(string username, Ruleset? ruleset = null, CancellationToken? cancellationToken = null)
-    => await GetAsync<UserExtended>($"users/@{username}/{(ruleset is null ? "" : ruleset.Value.GetQueryName())}", cancellationToken);
+    => (await GetAsync<UserExtended>($"users/@{username}/{(ruleset is null ? "" : ruleset.Value.GetQueryName())}", cancellationToken))
+             .WithErrorFallback(APIErrorType.UserNotFound);
 
   /// <summary>
   /// Returns all users with the specified IDs, up to 50, optionally including the <c>statistics_rulesets.variants</c> attribute.
