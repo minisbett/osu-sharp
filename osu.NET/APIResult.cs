@@ -76,12 +76,35 @@ public class APIResult<T> where T : class
   /// </summary>
   /// <param name="success">Executed if the API request was successful, receiving the value.</param>
   /// <param name="error">Executed if the API request failed, receiving the error.</param>
+  public void Match(Action<T?> success, Action<APIError> error)
+  {
+    if (IsSuccess)
+      success(Value);
+    else
+      error(Error);
+  }
+
+  /// <summary>
+  /// Matches the API result to execute the corresponding success or error handler.
+  /// </summary>
+  /// <param name="success">Executed if the API request was successful, receiving the value.</param>
+  /// <param name="error">Executed if the API request failed, receiving the error.</param>
   public void Match(Action<T?> success, Func<APIError, Action> error)
   {
     if (IsSuccess)
       success(Value);
     else
       error(Error)();
+  }
+
+  /// <summary>
+  /// Matches the API result to execute the corresponding success or error handler, returning a value of type <typeparamref name="TReturn"/>.
+  /// </summary>
+  /// <param name="success">Executed if the API request was successful, receiving the value.</param>
+  /// <param name="error">Executed if the API request failed, receiving the error.</param>
+  public TReturn Match<TReturn>(Func<T?, TReturn> success, Func<APIError, TReturn> error)
+  {
+    return IsSuccess ? success(Value) : error(Error);
   }
 
   /// <summary>
