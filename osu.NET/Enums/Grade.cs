@@ -58,5 +58,11 @@ public enum Grade
   /// D-rank accuracy, any mod.
   /// </summary>
   [JsonAPIName("d")]
-  D
+  D,
+
+  /// <summary>
+  /// Failed score.
+  /// </summary>
+  [JsonAPIName("F")]
+  F
 }
