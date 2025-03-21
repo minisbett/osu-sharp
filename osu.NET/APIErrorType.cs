@@ -59,6 +59,11 @@
     /// <summary>
     /// Indicates that the wiki page (or locale) in the request could not be found.
     /// </summary>
-    WikiPageNotFound
+    WikiPageNotFound,
+
+    /// <summary>
+    /// Indicates that one of the mods in the request is invalid for the ruleset in the context.
+    /// </summary>
+    InvalidMod
   }
 }

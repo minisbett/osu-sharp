@@ -95,8 +95,8 @@ public partial class OsuApiClient
   /// <param name="cancellationToken">Optional. The cancellation token for aborting the request.</param>
   /// <returns>The best score by the specified user on the specified beatmap.</returns>
   [CanReturnAPIError(APIErrorType.BeatmapNotFound, APIErrorType.UserOrScoreNotFound)]
-  public async Task<APIResult<UserBeatmapScore>> GetUserBeatmapScoreAsync(int beatmapId, int userId, bool legacyOnly = false, Ruleset? ruleset = null,
-                                                                          CancellationToken? cancellationToken = null)
+  public async Task<APIResult<UserBeatmapScore>> GetUserBeatmapScoreAsync(int beatmapId, int userId, bool legacyOnly = false,
+    Ruleset? ruleset = null, CancellationToken? cancellationToken = null)
     => (await GetAsync<UserBeatmapScore>($"beatmaps/{beatmapId}/scores/users/{userId}", cancellationToken, new()
     {
       ["legacy_only"] = legacyOnly,
@@ -132,7 +132,7 @@ public partial class OsuApiClient
   /// <returns>The scores of the specified user on the specified beatmap.</returns>
   [CanReturnAPIError(APIErrorType.BeatmapNotFound, APIErrorType.UserOrScoreNotFound)]
   public async Task<APIResult<Score[]>> GetUserBeatmapScoresAsync(int beatmapId, int userId, bool legacyOnly = false, Ruleset? ruleset = null,
-                                                                  CancellationToken? cancellationToken = null)
+    CancellationToken? cancellationToken = null)
     => (await GetAsync<Score[]>($"beatmaps/{beatmapId}/scores/users/{userId}/all", cancellationToken, new()
     {
       ["legacy_only"] = legacyOnly,
@@ -164,7 +164,8 @@ public partial class OsuApiClient
   /// <param name="cancellationToken">Optional. The cancellation token for aborting the request.</param>
   /// <returns>The top 50 scores on the specified beatmap.</returns>
   [CanReturnAPIError(APIErrorType.BeatmapNotFound)]
-  public async Task<APIResult<Score[]>> GetBeatmapScoresAsync(int beatmapId, bool legacyOnly = false, Ruleset? ruleset = null, CancellationToken? cancellationToken = null)
+  public async Task<APIResult<Score[]>> GetBeatmapScoresAsync(int beatmapId, bool legacyOnly = false, Ruleset? ruleset = null, 
+    CancellationToken? cancellationToken = null)
     => await GetAsync<Score[]>($"beatmaps/{beatmapId}/scores", cancellationToken, new()
     {
       ["legacy_only"] = legacyOnly,
@@ -235,12 +236,18 @@ public partial class OsuApiClient
   /// <param name="cancellationToken">Optional. The cancellation token for aborting the request.</param>
   /// <returns>The difficulty attributes of the specified beatmap with the specified ruleset and mods.</returns>
   [CanReturnAPIError(APIErrorType.BeatmapNotFound)]
-  public async Task<APIResult<DifficultyAttributes>> GetDifficultyAttributesAsync(int beatmapId, Ruleset ruleset = Ruleset.Osu, string[]? mods = null,
-                                                                                  CancellationToken? cancellationToken = null)
+  public async Task<APIResult<DifficultyAttributes>> GetDifficultyAttributesAsync(int beatmapId, Ruleset ruleset = Ruleset.Osu,
+    string[]? mods = null, CancellationToken? cancellationToken = null)
   {
     // TODO: add support for specifying the ruleset (requires body content)
     string query = string.Join("&", (mods ?? []).Select(x => $"mods[]={x}"));
-    return await GetAsync<DifficultyAttributes>($"beatmaps/{beatmapId}/attributes?{query}", cancellationToken, 
-                                                jsonSelector: x => x["attributes"], method: HttpMethod.Post);
+    APIResult<DifficultyAttributes> result = await GetAsync<DifficultyAttributes>($"beatmaps/{beatmapId}/attributes?{query}",
+      cancellationToken, jsonSelector: x => x["attributes"], method: HttpMethod.Post);
+
+    // Hotfix the error type if a specified mod is invalid as the error message is not static.
+    if (result.Error?.Message?.StartsWith("invalid mod for ruleset: ") ?? false)
+      result.Error.Type = APIErrorType.InvalidMod;
+
+    return result;
   }
 }
