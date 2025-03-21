@@ -140,7 +140,8 @@ public partial class OsuApiClient
     }, json => json["scores"])).WithErrorFallback(APIErrorType.UserOrScoreNotFound);
 
   /// <summary>
-  /// Returns the top 50 scores on the specified beatmap in the specified ruleset.
+  /// Returns the top 50 scores on the specified beatmap in the specified ruleset, optionally excluding osu!lazer scores.<br/>
+  /// If osu!lazer scores are returned, the osu!lazer scoring is used. Otherwise, the classic scoring is used.
   /// <br/><br/>
   /// Errors:<br/>
   /// <item>
@@ -155,16 +156,18 @@ public partial class OsuApiClient
   /// </list>
   /// <br/><br/>
   /// API docs:<br/>
-  /// <a href="https://osu.ppy.sh/docs/index.html#get-beatmap-scores-non-legacy"/>
+  /// <a href="https://osu.ppy.sh/docs/index.html#get-beatmap-scores"/>
   /// </summary>
   /// <param name="beatmapId">The ID of the beatmap to receive the scores of.</param>
+  /// <param name="legacyOnly">Optional. Bool whether osu!lazer scores are excluded. Defaults to false.</param>
   /// <param name="ruleset">Optional. The ruleset in which the scores were set. Defaults to the users' preferred ruleset.</param>
   /// <param name="cancellationToken">Optional. The cancellation token for aborting the request.</param>
   /// <returns>The top 50 scores on the specified beatmap.</returns>
   [CanReturnAPIError(APIErrorType.BeatmapNotFound)]
-  public async Task<APIResult<Score[]>> GetBeatmapScoresAsync(int beatmapId, Ruleset? ruleset = null, CancellationToken? cancellationToken = null)
-    => await GetAsync<Score[]>($"beatmaps/{beatmapId}/solo-scores", cancellationToken, new()
+  public async Task<APIResult<Score[]>> GetBeatmapScoresAsync(int beatmapId, bool legacyOnly = false, Ruleset? ruleset = null, CancellationToken? cancellationToken = null)
+    => await GetAsync<Score[]>($"beatmaps/{beatmapId}/scores", cancellationToken, new()
     {
+      ["legacy_only"] = legacyOnly,
       ["mode"] = ruleset
     }, json => json["scores"]);
 
