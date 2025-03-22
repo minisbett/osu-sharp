@@ -28,7 +28,7 @@ public class APIError
   /// </summary>
   /// <param name="message">The error message provided by the osu! API.</param>
   /// <returns>The parsed <see cref="APIError"/>.</returns>
-  internal static APIError FromErrorMessage(string? message)
+  internal static APIError FromMessage(string? message)
   {
     if (message is null)
       return new(APIErrorType.Null, null);

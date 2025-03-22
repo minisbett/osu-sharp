@@ -46,30 +46,4 @@ internal static class APIUtils
     enumValue = null;
     return false;
   }
-
-  /// <summary>
-  /// Returns an URL based on the specified base URL and query parameters, excluding those parameters with a null value.
-  /// </summary>
-  /// <param name="url">The base request URL.</param>
-  /// <param name="queryParameters">The query parameters.</param>
-  /// <returns>The full URL.</returns>
-  public static string GetRequestUrl(string url, (string Key, object? Value)[] queryParameters)
-  {
-    url = $"{url.TrimEnd('/')}?";
-
-    foreach ((string Key, object? Value) parameter in queryParameters.Where(x => x.Value is not null))
-    {
-      string value = parameter.Value switch
-      {
-        Enum e => e.GetQueryName(),       // Enum     -> APIQueryName attribute
-        DateTime dt => dt.ToString("o"),  // DateTime -> ISO 8601
-        bool b => b.ToString().ToLower(), // bool     -> lower-case
-        _ => parameter.Value!.ToString()!
-      };
-
-      url += $"{HttpUtility.UrlEncode(parameter.Key)}={HttpUtility.UrlEncode(value)}&";
-    }
-
-    return url.TrimEnd('?').TrimEnd('&');
-  }
 }
