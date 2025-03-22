@@ -124,17 +124,17 @@ public partial class OsuApiClient(IOsuAccessTokenProvider accessTokenProvider, O
   {
     url = $"{url.TrimEnd('/')}?";
 
-    foreach ((string Key, object? Value) parameter in queryParameters.Where(x => x.Value is not null))
+    foreach ((string key, object? value) in queryParameters.Where(x => x.Value is not null))
     {
-      string value = parameter.Value switch
+      string valueStr = value switch
       {
         Enum e => e.GetQueryName(),       // Enum     -> APIQueryName attribute
         DateTime dt => dt.ToString("o"),  // DateTime -> ISO 8601
         bool b => b.ToString().ToLower(), // bool     -> lower-case
-        _ => parameter.Value!.ToString()!
+        _ => value!.ToString()!
       };
 
-      url += $"{HttpUtility.UrlEncode(parameter.Key)}={HttpUtility.UrlEncode(value)}&";
+      url += $"{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(valueStr)}&";
     }
 
     return url.TrimEnd('?').TrimEnd('&');
