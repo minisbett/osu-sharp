@@ -45,7 +45,7 @@ public partial class OsuApiClient(IOsuAccessTokenProvider accessTokenProvider, O
   /// <param name="method">The HTTP method used for the request.</param>
   /// <param name="cancellationToken">The cancellation token for aborting the request.</param>
   /// <returns>The HTTP response.</returns>
-  private async Task<HttpResponseMessage> SendAsync(string url, Dictionary<string, object?> parameters, HttpMethod method,
+  private async Task<HttpResponseMessage> SendAsync(string url, (string, object?)[] parameters, HttpMethod method,
                                                            CancellationToken cancellationToken)
   {
     await EnsureAccessTokenAsync(cancellationToken);
@@ -74,7 +74,7 @@ public partial class OsuApiClient(IOsuAccessTokenProvider accessTokenProvider, O
               Status: {Status}
           Parameters: {Params}
           """, _http.BaseAddress + url, watch.ElapsedMilliseconds, response is null ? "Error" : $"{(int)response.StatusCode} ({response.StatusCode})",
-               parameters.Count == 0 ? "None" : parameters);
+               parameters.Length == 0 ? "None" : parameters);
     }
 
     return response;
@@ -91,7 +91,7 @@ public partial class OsuApiClient(IOsuAccessTokenProvider accessTokenProvider, O
   /// <param name="jsonSelector">Optional. A JSON selector for parsing nested objects instead of the root JSON.</param>
   /// <param name="method">Optional. The HTTP method used for the request. Defaults to GET.</param>
   /// <returns>The parsed API result.</returns>
-  private async Task<APIResult<T>> GetAsync<T>(string url, CancellationToken? cancellationToken, Dictionary<string, object?>? parameters = null,
+  private async Task<APIResult<T>> GetAsync<T>(string url, CancellationToken? cancellationToken, (string, object?)[]? parameters = null,
                                                Func<JObject, JToken?>? jsonSelector = null, HttpMethod? method = null) where T : class
   {
     cancellationToken ??= CancellationToken.None;

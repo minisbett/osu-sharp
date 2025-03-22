@@ -25,10 +25,7 @@ public partial class OsuApiClient
   /// <returns>The users on the specified page of the kudosu ranking.</returns>
   [CanReturnAPIError()]
   public async Task<APIResult<User[]>> GetKudosuRankingAsync(int? page = null, CancellationToken? cancellationToken = null)
-    => await GetAsync<User[]>($"rankings/kudosu", cancellationToken, new()
-    {
-      ["page"] = page
-    }, x => x["ranking"]);
+    => await GetAsync<User[]>($"rankings/kudosu", cancellationToken, [("page", page)], json => json["ranking"]);
 
   /// <summary>
   /// Returns a list of all spotlights.

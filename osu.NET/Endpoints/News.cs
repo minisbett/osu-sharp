@@ -46,8 +46,5 @@ public partial class OsuApiClient
   /// <returns>The news post with the specified ID.</returns>
   [CanReturnAPIError(APIErrorType.NewsPostNotFound)]
   public async Task<APIResult<NewsPost>> GetNewsPostAsync(int id, CancellationToken? cancellationToken = null)
-    => (await GetAsync<NewsPost>($"news/{id}", cancellationToken, new()
-    {
-      ["key"] = "id"
-    })).WithErrorFallback(APIErrorType.NewsPostNotFound);
+    => (await GetAsync<NewsPost>($"news/{id}", cancellationToken, [("key", id)])).WithErrorFallback(APIErrorType.NewsPostNotFound);
 }

@@ -29,10 +29,7 @@ public partial class OsuApiClient
   /// <returns>The beatmapset containing the beatmap with the specified ID.</returns>
   [CanReturnAPIError(APIErrorType.BeatmapNotFound)]
   public async Task<APIResult<BeatmapSetExtended>> LookupBeatmapSetAsync(int beatmapId, CancellationToken? cancellationToken = null)
-    => await GetAsync<BeatmapSetExtended>($"beatmapsets/lookup", cancellationToken, new()
-    {
-      ["beatmap_id"] = beatmapId
-    });
+    => await GetAsync<BeatmapSetExtended>($"beatmapsets/lookup", cancellationToken, [("beatmap_id", beatmapId)]);
 
   /// <summary>
   /// Returns the beatmapset with the specified ID. If the beatmapset was not found, null is returned.

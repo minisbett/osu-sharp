@@ -31,11 +31,11 @@ public partial class OsuApiClient
   [CanReturnAPIError(APIErrorType.UserNotFound)]
   public async Task<APIResult<KudosuHistoryEntry[]>> GetKudosuHistoryAsync(int userId, int? limit = null, int? offset = null,
                                                                            CancellationToken? cancellationToken = null)
-    => (await GetAsync<KudosuHistoryEntry[]>($"users/{userId}/kudosu", cancellationToken, new()
-    {
-      ["limit"] = limit,
-      ["offset"] = offset
-    })).WithErrorFallback(APIErrorType.UserNotFound);
+    => (await GetAsync<KudosuHistoryEntry[]>($"users/{userId}/kudosu", cancellationToken,
+    [
+      ("limit", limit),
+      ("offset", offset)
+    ])).WithErrorFallback(APIErrorType.UserNotFound);
 
   /// <summary>
   /// Returns the scores of the specified user with the specified type in the specified ruleset, optionally excluding osu!lazer scores and fails.
@@ -62,14 +62,14 @@ public partial class OsuApiClient
   public async Task<APIResult<Score[]>> GetUserScoresAsync(int userId, UserScoreType type, bool legacyOnly = false, bool includeFails = false,
                                                            Ruleset? ruleset = null, int? limit = null, int? offset = null,
                                                            CancellationToken? cancellationToken = null)
-    => (await GetAsync<Score[]>($"users/{userId}/scores/{type.GetQueryName()}", cancellationToken, new()
-    {
-      ["legacy_only"] = legacyOnly,
-      ["include_fails"] = includeFails,
-      ["mode"] = ruleset,
-      ["limit"] = limit,
-      ["offset"] = offset
-    })).WithErrorFallback(APIErrorType.UserNotFound);
+    => (await GetAsync<Score[]>($"users/{userId}/scores/{type.GetQueryName()}", cancellationToken,
+    [
+      ("legacy_only", legacyOnly),
+      ("include_fails", includeFails),
+      ("mode", ruleset),
+      ("limit", limit),
+      ("offset", offset)
+    ])).WithErrorFallback(APIErrorType.UserNotFound);
 
   /// <summary>
   /// Returns the most played beatmaps of the specified user.
@@ -91,11 +91,11 @@ public partial class OsuApiClient
   [CanReturnAPIError(APIErrorType.UserNotFound)]
   public async Task<APIResult<BeatmapPlaycount[]>> GetUserMostPlayedAsync(int userId, int? limit = null, int? offset = null,
                                                                           CancellationToken? cancellationToken = null)
-    => (await GetAsync<BeatmapPlaycount[]>($"users/{userId}/beatmapsets/most_played", cancellationToken, new()
-    {
-      ["limit"] = limit,
-      ["offset"] = offset
-    })).WithErrorFallback(APIErrorType.UserNotFound);
+    => (await GetAsync<BeatmapPlaycount[]>($"users/{userId}/beatmapsets/most_played", cancellationToken,
+    [
+      ("limit", limit),
+      ("offset", offset)
+    ])).WithErrorFallback(APIErrorType.UserNotFound);
 
   /// <summary>
   /// Returns all beatmaps of the specified user with the specified type.
@@ -121,11 +121,11 @@ public partial class OsuApiClient
   [CanReturnAPIError(APIErrorType.UserNotFound)]
   public async Task<APIResult<BeatmapSetExtended[]>> GetUserBeatmapsAsync(int userId, BeatmapType type, int? limit = null, int? offset = null,
                                                                           CancellationToken? cancellationToken = null)
-    => (await GetAsync<BeatmapSetExtended[]>($"users/{userId}/beatmapsets/{type.GetQueryName()}", cancellationToken, new()
-    {
-      ["limit"] = limit,
-      ["offset"] = offset
-    })).WithErrorFallback(APIErrorType.UserNotFound);
+    => (await GetAsync<BeatmapSetExtended[]>($"users/{userId}/beatmapsets/{type.GetQueryName()}", cancellationToken,
+    [
+      ("limit", limit),
+      ("offset", offset)
+    ])).WithErrorFallback(APIErrorType.UserNotFound);
 
   /// <summary>
   /// Returns the recent events of the specified user.
@@ -146,11 +146,11 @@ public partial class OsuApiClient
   /// <returns>The recent events of the user with the specified ID.</returns>
   [CanReturnAPIError(APIErrorType.UserNotFound)]
   public async Task<APIResult<UserEvent[]>> GetRecentActivityAsync(int userId, int? limit = null, int? offset = null, CancellationToken? cancellationToken = null)
-    => (await GetAsync<UserEvent[]>($"users/{userId}/recent_activity", cancellationToken, new()
-    {
-      ["limit"] = limit,
-      ["offset"] = offset
-    })).WithErrorFallback(APIErrorType.UserNotFound);
+    => (await GetAsync<UserEvent[]>($"users/{userId}/recent_activity", cancellationToken,
+    [
+      ("limit", limit),
+      ("offset", offset)
+    ])).WithErrorFallback(APIErrorType.UserNotFound);
 
   /// <summary>
   /// Returns the user with the specified ID, optionally in the specified ruleset. If no ruleset is specified, the user is returned in their default ruleset.
@@ -170,8 +170,8 @@ public partial class OsuApiClient
   /// <returns>The user with the specified ID.</returns>
   [CanReturnAPIError(APIErrorType.UserNotFound)]
   public async Task<APIResult<UserExtended>> GetUserAsync(int userId, Ruleset? ruleset = null, CancellationToken? cancellationToken = null)
-    => (await GetAsync<UserExtended>($"users/{userId}/{(ruleset is null ? "" : ruleset.Value.GetQueryName())}", cancellationToken))
-             .WithErrorFallback(APIErrorType.UserNotFound);
+    => (await GetAsync<UserExtended>($"users/{userId}/{ruleset?.GetQueryName() ?? ""}", cancellationToken))
+       .WithErrorFallback(APIErrorType.UserNotFound);
 
   /// <summary>
   /// Returns the user with the specified name, optionally in the specified ruleset. If no ruleset is specified, the user is returned in their default ruleset.
@@ -191,8 +191,8 @@ public partial class OsuApiClient
   /// <returns>The user with the specified name.</returns>
   [CanReturnAPIError(APIErrorType.UserNotFound)]
   public async Task<APIResult<UserExtended>> GetUserAsync(string username, Ruleset? ruleset = null, CancellationToken? cancellationToken = null)
-    => (await GetAsync<UserExtended>($"users/@{username}/{(ruleset is null ? "" : ruleset.Value.GetQueryName())}", cancellationToken))
-             .WithErrorFallback(APIErrorType.UserNotFound);
+    => (await GetAsync<UserExtended>($"users/@{username}/{ruleset?.GetQueryName() ?? ""}", cancellationToken))
+       .WithErrorFallback(APIErrorType.UserNotFound);
 
   /// <summary>
   /// Returns all users with the specified IDs, up to 50.
@@ -213,8 +213,5 @@ public partial class OsuApiClient
   [CanReturnAPIError()]
   public async Task<APIResult<User[]>> GetUsersAsync(int[] ids, CancellationToken? cancellationToken = null)
   // This endpoint does not have includeVariantStatistics, as the User object for some reason never contains statistics_rulesets
-  {
-    string query = string.Join("&", ids.Select(x => $"ids[]={x}"));
-    return await GetAsync<User[]>($"users?{query}", cancellationToken, jsonSelector: json => json["users"]);
-  }
+    => await GetAsync<User[]>($"users", cancellationToken, [.. ids.Select(x => ("ids[]", x))], json => json["users"]);
 }

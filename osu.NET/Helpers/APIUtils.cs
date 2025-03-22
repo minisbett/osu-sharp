@@ -48,17 +48,16 @@ internal static class APIUtils
   }
 
   /// <summary>
-  /// Returns an URL based on the specified base URL and query parameters, excluding those parameters with a null value.<br/>
-  /// The URL may already contain query parameters, in which case the specified ones are appended.
+  /// Returns an URL based on the specified base URL and query parameters, excluding those parameters with a null value.
   /// </summary>
   /// <param name="url">The base request URL.</param>
   /// <param name="queryParameters">The query parameters.</param>
   /// <returns>The full URL.</returns>
-  public static string GetRequestUrl(string url, Dictionary<string, object?> queryParameters)
+  public static string GetRequestUrl(string url, (string Key, object? Value)[] queryParameters)
   {
-    url = url.TrimEnd('/') + (url.Contains('?') ? "&" : "?");
+    url = $"{url.TrimEnd('/')}?";
 
-    foreach (KeyValuePair<string, object?> parameter in queryParameters.Where(x => x.Value is not null))
+    foreach ((string Key, object? Value) parameter in queryParameters.Where(x => x.Value is not null))
     {
       string value = parameter.Value switch
       {
