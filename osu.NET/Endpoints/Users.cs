@@ -195,7 +195,7 @@ public partial class OsuApiClient
              .WithErrorFallback(APIErrorType.UserNotFound);
 
   /// <summary>
-  /// Returns all users with the specified IDs, up to 50, optionally including the <c>statistics_rulesets.variants</c> attribute.
+  /// Returns all users with the specified IDs, up to 50.
   /// If a user ID could not be found, it is skipped.
   /// <br/><br/>
   /// API notes:
@@ -203,26 +203,18 @@ public partial class OsuApiClient
   /// <item>Includes <see cref="User.Country"/></item>
   /// <item>Includes <see cref="User.Cover"/></item>
   /// <item>Includes <see cref="User.Groups"/></item>
-  /// <item>Includes <see cref="User.RulesetStatistics"/></item>
   /// </list>
   /// API docs:<br/>
   /// <a href="https://osu.ppy.sh/docs/index.html#get-users"/>
   /// </summary>
   /// <param name="ids">The user IDs.</param>
-  /// <param name="includeVariantStatistics">Optional. Bool whether the <c>statistics_rulesets.variants</c> attribute is included.</param>
   /// <param name="cancellationToken">Optional. The cancellation token for aborting the request.</param>
   /// <returns>The users with the specified IDs.</returns>
   [CanReturnAPIError()]
-  public async Task<APIResult<User[]>> GetUsersAsync(int[] ids, bool includeVariantStatistics = false, CancellationToken? cancellationToken = null)
+  public async Task<APIResult<User[]>> GetUsersAsync(int[] ids, CancellationToken? cancellationToken = null)
+  // This endpoint does not have includeVariantStatistics, as the User object for some reason never contains statistics_rulesets
   {
-    // TODO: add support for includeVariantStatistics
-    if (includeVariantStatistics)
-      throw new NotSupportedException("This library does not support includeVariantStatistics yet.");
-
     string query = string.Join("&", ids.Select(x => $"ids[]={x}"));
-    return await GetAsync<User[]>($"users?{query}", cancellationToken, new()
-    {
-      ["include_variant_statistics"] = includeVariantStatistics
-    }, jsonSelector: json => json["users"]);
+    return await GetAsync<User[]>($"users?{query}", cancellationToken, jsonSelector: json => json["users"]);
   }
 }

@@ -10,8 +10,6 @@ namespace osu.NET.Models.Users;
 /// </summary>
 public class User
 {
-  // TODO: Implement "statistics_rulesets" attribute
-
   #region Default Attributes
 
   /// <summary>
