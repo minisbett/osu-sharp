@@ -221,7 +221,10 @@ public partial class OsuApiClient
   /// <item>
   ///   <term><see cref="APIErrorType.BeatmapNotFound"/></term>
   ///   <description>The beatmap could not be found</description>
-  ///  </item>
+  /// </item>
+  /// <br/><br/>
+  /// API docs:<br/>
+  /// <a href="https://osu.ppy.sh/docs/index.html#get-beatmap-attributes"/>
   /// </summary>
   /// <param name="beatmapId">The beatmap ID.</param>
   /// <param name="ruleset">Optional. The ruleset to consider for the beatmap.</param>
@@ -232,9 +235,10 @@ public partial class OsuApiClient
   public async Task<APIResult<DifficultyAttributes>> GetDifficultyAttributesAsync(int beatmapId, Ruleset ruleset = Ruleset.Osu,
     string[]? mods = null, CancellationToken? cancellationToken = null)
   {
-    // TODO: add support for specifying the ruleset (requires body content)
+    HttpContent content = new StringContent($"{{\"ruleset\": {ruleset.GetQueryName()}}}");
+
     APIResult<DifficultyAttributes> result = await GetAsync<DifficultyAttributes>($"beatmaps/{beatmapId}/attributes",
-      cancellationToken, [..(mods ?? []).Select(x => ("mods[]", x))], x => x["attributes"], HttpMethod.Post);
+      cancellationToken, [.. (mods ?? []).Select(x => ("mods[]", x))], x => x["attributes"], HttpMethod.Post, content);
 
     // Hotfix the error type if a specified mod is invalid as the error message is not static.
     if (result.Error?.Message?.StartsWith("invalid mod for ruleset: ") ?? false)
