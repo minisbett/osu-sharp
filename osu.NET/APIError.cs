@@ -52,6 +52,7 @@ public class APIError
     ["Specified beatmap couldn't be found."] = APIErrorType.BeatmapSetNotFound,
     ["Specified BeatmapPack couldn't be found."] = APIErrorType.BeatmapPackNotFound,
     ["Specified Build couldn't be found."] = APIErrorType.BuildNotFound,
-    ["Specified Comment couldn't be found."] = APIErrorType.CommentNotFound
+    ["Specified Comment couldn't be found."] = APIErrorType.CommentNotFound,
+    ["Specified Forum\\Forum couldn't be found."] = APIErrorType.ForumNotFound
   };
 }

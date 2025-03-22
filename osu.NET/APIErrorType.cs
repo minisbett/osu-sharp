@@ -64,6 +64,11 @@
     /// <summary>
     /// Indicates that one of the mods in the request is invalid for the ruleset in the context.
     /// </summary>
-    InvalidMod
+    InvalidMod,
+
+    /// <summary>
+    /// Indicates that the forum in the request could not be found.
+    /// </summary>
+    ForumNotFound
   }
 }
